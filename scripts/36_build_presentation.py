@@ -12,7 +12,7 @@ from pptx.enum.text import PP_ALIGN
 from pptx.util import Inches, Pt
 from pptx.enum.dml import MSO_THEME_COLOR
 
-proj  = "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+proj  = "."
 figs  = os.path.join(proj, "results/figures")
 out   = os.path.join(proj, "PRESENTATION_MultiOmicMR_2026-05-07.pptx")
 

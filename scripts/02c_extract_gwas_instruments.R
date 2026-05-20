@@ -19,7 +19,7 @@ set.seed(42)
 if (!require("data.table", quietly=TRUE)) install.packages("data.table", repos="https://cloud.r-project.org")
 library(data.table)
 
-project_dir <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+project_dir <- "."
 gwas_dir    <- file.path(project_dir, "data", "mqtl", "mqtl_full_gwas")
 out_dir     <- file.path(project_dir, "data", "mqtl")
 

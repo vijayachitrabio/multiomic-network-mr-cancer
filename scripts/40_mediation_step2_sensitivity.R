@@ -22,7 +22,7 @@ suppressPackageStartupMessages({
   library(tibble)
 })
 
-proj    <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+proj    <- "."
 out_dir <- file.path(proj, "results/mediation")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 

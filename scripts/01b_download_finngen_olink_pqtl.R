@@ -14,7 +14,7 @@ suppressPackageStartupMessages({
   library(curl)
 })
 
-project_dir <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+project_dir <- "."
 out_dir     <- file.path(project_dir, "data", "pqtl")
 report_dir  <- file.path(out_dir, "finngen_olink_group_report")
 dir.create(report_dir, recursive = TRUE, showWarnings = FALSE)

@@ -12,7 +12,7 @@ from scipy.stats import spearmanr
 from statsmodels.stats.multitest import multipletests
 
 
-PROJECT_DIR = Path("/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project")
+PROJECT_DIR = Path(".")
 OUT_DIR = PROJECT_DIR / "results" / "cptac"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 

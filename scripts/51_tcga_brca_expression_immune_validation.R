@@ -8,7 +8,7 @@ suppressPackageStartupMessages({
   library(ggplot2)
 })
 
-project_dir <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+project_dir <- "."
 cache_dir <- file.path(project_dir, "data", "tcga_brca")
 out_dir <- file.path(project_dir, "results", "tcga_immune")
 fig_dir <- file.path(project_dir, "results", "figures")

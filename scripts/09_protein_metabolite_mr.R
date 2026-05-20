@@ -14,7 +14,7 @@
 
 set.seed(42)
 
-project_dir <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+project_dir <- "."
 local_lib <- file.path(project_dir, "r_libs")
 if (!dir.exists(local_lib)) dir.create(local_lib, recursive = TRUE)
 .libPaths(c(local_lib, .libPaths()))

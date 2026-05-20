@@ -8,7 +8,7 @@ suppressPackageStartupMessages({
   library(Rsamtools)
 })
 
-project_dir <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+project_dir <- "."
 out_dir <- file.path(project_dir, "results", "bidirectional")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 

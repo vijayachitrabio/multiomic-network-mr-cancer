@@ -13,7 +13,7 @@ if (!require("TwoSampleMR", quietly=TRUE)) install.packages("TwoSampleMR", repos
 library(data.table)
 library(TwoSampleMR)
 
-project_dir <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+project_dir <- "."
 out_dir     <- file.path(project_dir, "data", "harmonised")
 cancer_dir  <- file.path(project_dir, "data", "cancer_gwas")
 

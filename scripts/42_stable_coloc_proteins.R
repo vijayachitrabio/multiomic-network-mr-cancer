@@ -7,7 +7,7 @@ suppressPackageStartupMessages({
   library(data.table); library(dplyr); library(readr)
 })
 
-proj    <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+proj    <- "."
 out_dir <- file.path(proj, "results/tables")
 
 ## ── Load ──────────────────────────────────────────────────────────────────

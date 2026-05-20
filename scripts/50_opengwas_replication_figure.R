@@ -7,7 +7,7 @@ suppressPackageStartupMessages({
   library(data.table); library(ggplot2); library(dplyr)
 })
 
-proj    <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+proj    <- "."
 out_dir <- file.path(proj, "results/figures")
 dir.create(out_dir, recursive=TRUE, showWarnings=FALSE)
 
