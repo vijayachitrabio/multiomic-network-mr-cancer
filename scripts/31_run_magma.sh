@@ -64,7 +64,7 @@ done
 
 echo ""
 echo "Summarising MAGMA outputs ..."
-Rscript "$SCRIPT_DIR/31_summarise_magma_results.R"
+Rscript "$SCRIPT_DIR/32_summarise_magma_results.R"
 
 echo ""
 echo "MAGMA complete. Results: $RESULTS_DIR"

@@ -1,34 +1,61 @@
 # Analytical Workflow
 
-The pipeline is designed to be executed sequentially, from script `00` to `59`. Below is an overview of the key phases in the analysis:
+The pipeline is designed to be executed sequentially, from script `00` to `54`. Below is the complete ordered list of analysis scripts:
 
-## Phase 1: Environment and Setup
-* `00_setup_env.R`: Initializes libraries and folder structures.
-
-## Phase 2: Data Downloading and Extraction
-* `01_download_pqtl.R` & `01b_download_finngen_olink_pqtl.R`: Fetches primary pQTL data.
-* `02c_extract_gwas_instruments.R`: Identifies and formats independent genetic instruments.
-* `03_download_cancer_gwas.R`: Downloads the outcome GWAS (Breast/Endometrial cancer).
-
-## Phase 3: Harmonization
-* `04_harmonise_all.R` to `04d_harmonise_protein_metabolite.R`: Harmonizes the exposure instruments with the various outcomes.
-
-## Phase 4: Mendelian Randomization (MR)
-* `05_protein_cancer_mr.R`: Primary MR analysis of proteins on cancer risk.
-* `07_metabolite_cancer_mr.R`: Primary MR analysis of metabolites on cancer risk.
-* `09_protein_metabolite_mr.R`: MR analysis investigating protein-metabolite networks.
-
-## Phase 5: Colocalization and Steiger Filtering
-* `06_protein_cancer_coloc.R` & `08_metabolite_cancer_coloc.R`: Bayesian colocalization for prioritization.
-* `20_steiger_directionality.R`: Steiger filtering to establish causal direction.
-
-## Phase 6: Pathway Analysis (MAGMA)
-* `29_prepare_magma_inputs.R` to `31_summarise_magma_results.R`: Runs gene-set and pathway enrichment using MAGMA.
-
-## Phase 7: Replication and Validation
-* `34_ukbppp_replication_mr.R` & `38_aric_pqtl_replication_mr.R`: Replicates findings in UKB-PPP and ARIC.
-* `51_tcga_brca_expression_immune_validation.R` to `53_tisch_scrna_brca_validation.R`: In silico clinical validation using transcriptomic/proteomic profiles.
-
-## Phase 8: Evidence Integration & Figures
-* `41_master_evidence_table.R`: Compiles all tiers of evidence.
-* `54_integrated_evidence_map.R` to `59_supplementary_mr_design_figure.R`: Generates final summary figures.
+* `00_setup_env.R`
+* `01_download_pqtl.R`
+* `02_download_finngen_olink_pqtl.R`
+* `03_extract_gwas_instruments.R`
+* `04_download_cancer_gwas.R`
+* `05_harmonise_all.R`
+* `06_harmonise_metabolite_cancer.R`
+* `07_harmonise_protein_cancer.R`
+* `08_harmonise_protein_metabolite.R`
+* `09_protein_cancer_mr.R`
+* `10_protein_cancer_coloc.R`
+* `11_metabolite_cancer_mr.R`
+* `12_metabolite_cancer_coloc.R`
+* `13_protein_metabolite_mr.R`
+* `14_protein_metabolite_coloc.R`
+* `15_prioritise_validation_queue.R`
+* `16_coloc_metabolite_cancer.R`
+* `17_summarise_mediation_coloc_status.R`
+* `18_extract_priority_pqtl_regions.R`
+* `19_coloc_priority_mediation_legs.R`
+* `20_integrate_priority_coloc_evidence.R`
+* `21_sensitivity_multsnp_hits.R`
+* `22_er_subtype_mr.R`
+* `23_ukb_observational_validation.R`
+* `24_steiger_directionality.R`
+* `25_supplementary_figures.R`
+* `26_pathway_druggability.R`
+* `27_build_replication_priority_table.R`
+* `28_clarify_hdlc_chr7_locus.R`
+* `29_bidirectional_breast_to_protein_mr.R`
+* `30_prepare_magma_inputs.R`
+* `31_run_magma.sh`
+* `32_summarise_magma_results.R`
+* `33_ukbppp_replication_mr.R`
+* `34_build_presentation.py`
+* `35_prepare_aric_pqtl_instruments.R`
+* `36_protein_coloc_snx15_pm20d1.R`
+* `37_aric_pqtl_replication_mr.R`
+* `38_coloc_susie_snx15_pm20d1.R`
+* `39_coloc_remaining6_proteins.R`
+* `40_mediation_step2_sensitivity.R`
+* `41_master_evidence_table.R`
+* `42_stable_coloc_proteins.R`
+* `43_project_summary_email_doc.py`
+* `44_coloc_method_comparison_figure.R`
+* `45_aric_replication_forest.R`
+* `46_bidirectional_mr_v2.R`
+* `47_opengwas_pqtl_replication_mr.R`
+* `48_opengwas_replication_figure.R`
+* `49_tcga_brca_expression_immune_validation.R`
+* `50_cptac_brca_proteomics_immune_validation.py`
+* `51_tisch_scrna_brca_validation.R`
+* `52_integrated_evidence_map.R`
+* `53_priority_pleiotropy_robustness_map.R`
+* `54_priority_pleiotropy_chronograph.R`
+* `55_integrated_validation_summary.R`
+* `56_supplementary_mr_design_figure.R`
