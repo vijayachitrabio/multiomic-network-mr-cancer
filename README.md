@@ -1,4 +1,4 @@
-# Multi-Omic Network Mendelian Randomization for Gynecological Cancers
+# Multi-Omic Network Mendelian Randomization for Female Cancers
 
 This repository contains the analysis code and final output figures/tables for the study investigating the genetic and clinical links between common gynecological conditions (primarily breast and endometrial cancer). 
 
