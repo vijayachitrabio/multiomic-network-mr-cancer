@@ -4,7 +4,7 @@ suppressPackageStartupMessages({
   library(data.table)
 })
 
-project_dir <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+project_dir <- "."
 
 phase2_path <- file.path(project_dir, "results", "phase2_protein_cancer", "protein_cancer_mr_results_significant.csv")
 story_path  <- file.path(project_dir, "results", "validation", "manuscript_story_tiers.csv")

@@ -15,7 +15,7 @@ suppressPackageStartupMessages({
   library(scales)
 })
 
-project_dir <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+project_dir <- "."
 fig_dir     <- file.path(project_dir, "results", "figures")
 dir.create(fig_dir, showWarnings = FALSE)
 

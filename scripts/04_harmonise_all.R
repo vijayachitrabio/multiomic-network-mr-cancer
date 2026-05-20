@@ -11,7 +11,7 @@ library(tidyverse)
 library(TwoSampleMR)
 library(here)
 
-project_dir <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+project_dir <- "."
 
 clean_name <- function(path) {
   x <- basename(path)

@@ -28,7 +28,7 @@ suppressPackageStartupMessages({
 
 `%||%` <- function(a, b) if (!is.null(a) && !is.na(a) && a != "") a else b
 
-project_dir <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+project_dir <- "."
 out_dir     <- file.path(project_dir, "results", "pathway")
 dir.create(out_dir, showWarnings = FALSE)
 

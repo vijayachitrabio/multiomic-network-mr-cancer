@@ -17,7 +17,7 @@ suppressPackageStartupMessages({
 })
 
 set.seed(2026)
-proj    <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+proj    <- "."
 out_dir <- file.path(proj, "results/validation")
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 

@@ -26,7 +26,7 @@ library(tidyverse)
 library(TwoSampleMR)
 library(here)
 
-project_dir <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+project_dir <- "."
 in_dir  <- file.path(project_dir, "data", "harmonised")
 out_dir <- file.path(project_dir, "results", "phase2_protein_cancer")
 if (!dir.exists(out_dir)) dir.create(out_dir, recursive = TRUE)

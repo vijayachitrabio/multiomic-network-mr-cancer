@@ -21,7 +21,7 @@
 set.seed(42)
 suppressPackageStartupMessages(library(data.table))
 
-project_dir <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+project_dir <- "."
 out_dir     <- file.path(project_dir, "results", "observational")
 dir.create(out_dir, showWarnings = FALSE)
 

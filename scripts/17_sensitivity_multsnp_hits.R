@@ -26,7 +26,7 @@ suppressPackageStartupMessages({
   library(TwoSampleMR)
 })
 
-project_dir  <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+project_dir  <- "."
 harm_dir     <- file.path(project_dir, "data", "harmonised")
 out_dir      <- file.path(project_dir, "results", "sensitivity")
 dir.create(out_dir, showWarnings = FALSE)

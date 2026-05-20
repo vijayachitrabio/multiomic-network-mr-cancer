@@ -6,7 +6,7 @@ suppressPackageStartupMessages({
   library(data.table); library(ggplot2); library(ggrepel)
 })
 
-proj    <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+proj    <- "."
 dat_f   <- file.path(proj, "results/tables/STable8_protein_coloc.csv")
 out_dir <- file.path(proj, "results/figures")
 

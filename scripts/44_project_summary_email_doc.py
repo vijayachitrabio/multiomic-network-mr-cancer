@@ -12,7 +12,7 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 import os, copy
 
-proj = "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+proj = "."
 fig_dir = os.path.join(proj, "results", "figures")
 out_path = os.path.join(proj, "PROJECT_SUMMARY_EMAIL_2026-05-08.docx")
 

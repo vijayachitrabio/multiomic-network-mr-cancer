@@ -12,7 +12,7 @@ suppressPackageStartupMessages({
   library(Rsamtools);  library(GenomicRanges)
 })
 
-proj    <- "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+proj    <- "."
 out_dir <- file.path(proj, "results", "bidirectional")
 
 P_THRESH    <- 5e-8
