@@ -1,0 +1,61 @@
+# Massive data folders and intermediate results
+data/
+results/
+archive_7protein_pilot_SUPERSEDED/
+figures/
+tables/
+
+# Ignore the messy submission folder and local temp files
+submission_2026-05-20/
+test_plot.png
+scan_table.py
+Figure_*.png
+Figure_*.tiff
+Figure_*.pdf
+
+# Data files (fallback)
+*.rds
+*.tar
+*.tar.*
+*.gz
+*.tbi
+*.csv
+*.vcf
+*.vcf.gz
+*.part
+*.synapse_download_*
+*.pval
+*.snploc
+*.annot
+
+# Cache and temp files
+__pycache__/
+*.pyc
+.DS_Store
+~$*
+
+# Manuscript related markdowns, output documents, and generation scripts
+*MANUSCRIPT*.docx
+*MANUSCRIPT*.md
+*manuscript*.py
+*manuscript*.r
+*manuscript*.R
+*MANUSCRIPT*.py
+*MANUSCRIPT*.r
+*MANUSCRIPT*.R
+
+# Other local preparation
+ANALYSIS_NOTES*.md
+BMC_MEDICINE_STEPWISE_ROADMAP.md
+CLAIM_TIERS*.md
+COMPLETED_ANALYSES*.md
+DECODE_*.md
+HPA_SINGLE_CELL_VALIDATION*.md
+PROJECT_STATUS*.md
+PRESENTATION_*.pptx
+PROJECT_SUMMARY_EMAIL*.docx
+GW.docx
+We\ mapped*.docx
+fill_manuscript_placeholders.py
+build_presentation.py
+project_summary_email_doc.py
