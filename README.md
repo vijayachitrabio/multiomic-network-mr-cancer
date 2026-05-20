@@ -4,26 +4,38 @@ This repository contains the analysis code and final output figures/tables for t
 
 The pipeline leverages Mendelian Randomization (MR), Colocalization, Multi-omics (proteomics, metabolomics, transcriptomics), pathway enrichment (MAGMA), and single-cell RNA sequencing validation to map disease networks.
 
-## Repository Layout
+## Quick Start
 
-```text
-scripts/               # Comprehensive R and Python scripts for MR, colocalization, validation, and figure generation
-results/               # Analysis results, pathway annotations, and validation summaries
-submission_2026-05-20/ # Final generated manuscript figures (main and supplementary) and tables
-```
+1. Clone the repository: `git clone https://github.com/vijayachitrabio/multiomic-network-mr-cancer.git`
+2. Open the R project and restore dependencies: `renv::restore()`
+3. Download the required data (see Data Availability below).
+4. Run the scripts sequentially starting from `scripts/00_setup_env.R`.
 
-## Methodology
+## Dependencies
 
-The codebase covers the following systematic workflow:
-1. **Data Preparation**: Extraction and harmonization of pQTL and mQTL instruments alongside cancer GWAS summary statistics (e.g., FinnGen, openGWAS).
-2. **Mendelian Randomization**: Comprehensive bi-directional MR analyses linking proteins, metabolites, and gynecological cancers (including ER subtypes).
-3. **Colocalization**: Bayesian colocalization to prioritize shared causal variants.
-4. **Validation & Replication**: Replication in independent cohorts (ARIC, UKB-PPP) and external validation (TCGA, CPTAC proteomics, TISCH scRNA-seq).
-5. **Pathway Analysis**: MAGMA-based gene-set and pathway enrichment.
+This project relies on several R and Python packages. 
+R package dependencies are managed using `renv`. You can install all required packages by running `renv::restore()`.
+
+## Data Availability
+
+**Note:** Raw data files and intermediate results are *not* included in this repository due to size constraints and data access agreements. You must download the required input data (pQTLs, mQTLs, GWAS summary stats) before running the pipeline. 
+
+For detailed information on data sources and how to acquire them, please see [docs/data_sources.md](docs/data_sources.md).
 
 ## Reproducibility
 
-The `scripts/` directory contains numbered scripts (`00_setup_env.R` through `59_supplementary_mr_design_figure.R`) that document the exact execution order required to reproduce the analysis and generate the final manuscript figures. 
+To ensure full reproducibility, the analytical pipeline has been strictly organized into sequential scripts. All random seeds are set within the scripts where applicable. 
+
+## Script Execution Order
+
+The `scripts/` directory contains numbered scripts (`00_` through `59_`) that document the exact execution order. For a detailed breakdown of the workflow and what each script does, please consult [docs/workflow.md](docs/workflow.md).
+
+## Outputs
+
+Generated figures and tables are structured as follows:
+* `manuscript_outputs/figures/main`: Main manuscript figures
+* `manuscript_outputs/figures/supplementary`: Supplementary figures
+* `manuscript_outputs/tables/supplementary`: Supplementary tables
 
 ## Maintainer
 

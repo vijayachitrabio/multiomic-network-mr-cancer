@@ -59,3 +59,13 @@ We\ mapped*.docx
 fill_manuscript_placeholders.py
 build_presentation.py
 project_summary_email_doc.py
+
+# R dependencies and RStudio files
+r_libs/
+renv/library/
+.Rproj.user/
+
+# Root-level working files
+Rplots.pdf
+*.log
+download

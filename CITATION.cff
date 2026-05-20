@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+title: "Multi-Omic Network Mendelian Randomization for Gynecological Cancers"
+authors:
+  - family-names: "Modhukur"
+    given-names: "Vijayachitra"
+version: 1.0.0
+date-released: 2026-05-20
+repository-code: "https://github.com/vijayachitrabio/multiomic-network-mr-cancer"
+message: "If you use this code, please cite this repository."
