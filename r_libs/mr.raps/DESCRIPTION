@@ -1,0 +1,41 @@
+Package: mr.raps
+Title: Two Sample Mendelian Randomization using Robust Adjusted Profile
+        Score
+Version: 0.4.3
+Authors@R: c(
+    person("Qingyuan", "Zhao", , "qingyzhao@gmail.com", role = c("aut", "cre")),
+    person("Jingshu", "Wang", , "wangjingshususan@gmail.com", role = "aut")
+  )
+Description: Mendelian randomization is a method of identifying and
+        estimating a confounded causal effect using genetic
+        instrumental variables. This packages implements methods for
+        two-sample Mendelian randomization with summary statistics by
+        using Robust Adjusted Profile Score (RAPS). References:
+        Qingyuan Zhao, Jingshu Wang, Gibran Hemani, Jack Bowden, Dylan
+        S. Small. Statistical inference in two-sample summary-data
+        Mendelian randomization using robust adjusted profile score.
+        <arXiv:1801.09652>; Qingyuan Zhao, Yang Chen, Jingshu Wang,
+        Dylan S. Small. Powerful genome-wide design and robust
+        statistical inference in two-sample summary-data Mendelian
+        randomization. <arXiv:1804.07371>.
+License: GPL-3
+Depends: R (>= 2.10)
+Imports: ggplot2, ggrepel, graphics, gridExtra, nortest, rootSolve,
+        rsnps, splines, stats
+Suggests: bumphunter, TxDb.Hsapiens.UCSC.hg38.knownGene
+Remotes: ropensci/rsnps
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.3
+Config/pak/sysreqs: libicu-dev libssl-dev
+Repository: https://mrcieu.r-universe.dev
+Date/Publication: 2025-10-31 13:42:44 UTC
+RemoteUrl: https://github.com/qingyuanzhao/mr.raps
+RemoteRef: HEAD
+RemoteSha: dd79b5bd74d10b699503cdd226d70c726f11c796
+NeedsCompilation: no
+Packaged: 2026-04-29 07:40:29 UTC; root
+Author: Qingyuan Zhao [aut, cre],
+  Jingshu Wang [aut]
+Maintainer: Qingyuan Zhao <qingyzhao@gmail.com>
+Built: R 4.5.3; ; 2026-04-29 07:45:11 UTC; unix
