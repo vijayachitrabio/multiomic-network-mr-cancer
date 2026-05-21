@@ -137,7 +137,7 @@ Rscript scripts/41_master_evidence_table.R     # Evidence integration
 ## Contact
 
 **Vijayachitra Modhukur**  
-Institute of Molecular and Cell Biology, University of Tartu, Estonia  
+ University of Tartu, Estonia  
 GitHub: [@vijayachitrabio](https://github.com/vijayachitrabio)
 
 ---
