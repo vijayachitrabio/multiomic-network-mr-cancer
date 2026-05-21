@@ -1,42 +1,153 @@
 # Multi-Omic Network Mendelian Randomization for Female Cancers
 
-This repository contains the analysis code and final output figures/tables for the study investigating the genetic and clinical links between common gynecological conditions (primarily breast and endometrial cancer). 
+**Vijayachitra Modhukur** et al. | University of Tartu | 2026
 
-The pipeline leverages Mendelian Randomization (MR), Colocalization, Multi-omics (proteomics, metabolomics, transcriptomics), pathway enrichment (MAGMA), and single-cell RNA sequencing validation to map disease networks.
+> Preprint / submitted to *Neoplasia* / *iScience*
 
-## Quick Start
+---
 
-1. Clone the repository: `git clone https://github.com/vijayachitrabio/multiomic-network-mr-cancer.git`
-2. Open the R project and restore dependencies: `renv::restore()`
-3. Download the required data (see Data Availability below).
-4. Run the scripts sequentially starting from `scripts/00_setup_env.R`.
+## Overview
 
-## Dependencies
+This repository contains all analysis code and output files for a proteome-wide two-sample Mendelian randomisation (MR) study integrating proteomics, metabolomics, colocalization, gene-level triangulation, mediation MR, and multi-layer biological validation to identify causal circulating protein candidates for breast, endometrial, and ovarian cancer.
 
-This project relies on several R and Python packages. 
-R package dependencies are managed using `renv`. You can install all required packages by running `renv::restore()`.
+**Key findings:**
+- 701 circulating proteins screened using cis-pQTL instruments from FinnGen Olink (N = 619)
+- 17 protein–cancer associations survived FDR correction (16 breast, 1 endometrial)
+- **6 Tier 1 colocalization-supported candidates**: EFNA1, TNFRSF6B, ATRAID, FGF5, UMOD, ABO (PPH4 ≥ 0.80)
+- **2 MAGMA-supported candidates**: SNX15, PM20D1 (Bonferroni-significant gene-level support)
+- 5 protein → metabolite (BCAA/Glycine) → breast cancer mediation paths
+- Multi-layer validation: TCGA-BRCA (N=1,097), CPTAC-BRCA (N=121), TISCH scRNA-seq, Human Protein Atlas, ARIC SomaScan + OpenGWAS INTERVAL replication
+- Key methodological finding: **coloc.abf missed 2 of 8 colocalisations** (EFNA1, ATRAID); SuSiE essential for multi-signal loci
+
+### Study Design
+
+![Mendelian Randomization Study Design vs Clinical Trial](results/figures/sfig_mr_design_multiomic.png)
+
+---
+
+## Repository Structure
+
+```
+├── scripts/                    # Numbered R and bash scripts (00–59)
+├── data/                       # Input data (not tracked — see Data Availability)
+│   ├── pqtl/                   # FinnGen Olink pQTL summary stats
+│   ├── cancer_gwas/            # Breast/EC/OvC GWAS summary stats
+│   └── metabolomics/           # Nightingale NMR metabolite GWAS
+├── results/
+│   ├── figures/                # All figures (fig1–fig15, sfig1–6)
+│   ├── tables/                 # Supplementary tables (STable1–12)
+│   ├── phase2_protein_cancer/  # MR screen results
+│   ├── validation/             # Coloc, MAGMA, integrated evidence
+│   ├── mediation/              # Two-step mediation MR
+│   ├── replication/            # ARIC + OpenGWAS replication
+│   ├── tcga_immune/            # TCGA-BRCA expression + immune correlations
+│   ├── cptac/                  # CPTAC-BRCA proteomics
+│   ├── scrna/                  # TISCH scRNA-seq cell-type enrichment
+│   ├── bidirectional/          # Reverse-direction MR
+│   └── mvmr/                   # MVMR feasibility
+└── submission_2026-05-20/      # Submission-ready package
+    ├── MANUSCRIPT_v1.5_submission.docx
+    ├── main_figures/           # fig1–fig15
+    ├── supplementary_figures/  # sfig1–6
+    └── supplementary_tables/   # STable1–12
+```
+
+---
+
+## Analysis Pipeline
+
+Scripts are numbered and should be run sequentially:
+
+| Script range | Stage | Description |
+|---|---|---|
+| `00–09` | Setup | Environment, data download, preprocessing |
+| `10–19` | Phase 1 | Metabolite–cancer MR screen |
+| `20–29` | Phase 2 | Protein–cancer MR screen (701 proteins × 3 cancers) |
+| `30–35` | Phase 3 | Protein→metabolite MR (step 1 mediation) |
+| `36–42` | Colocalization | coloc.abf + coloc.susie for priority proteins and metabolites |
+| `43–44` | MAGMA | Gene-level triangulation |
+| `45–46` | Figures | Coloc method comparison, ARIC replication forest |
+| `47–48` | Bidirectional MR | Reverse-direction sensitivity analysis |
+| `49–50` | Replication | deCODE download attempt, OpenGWAS replication figure |
+| `51–59` | Validation | TCGA, CPTAC, scRNA-seq, HPA, integrated evidence |
+
+---
 
 ## Data Availability
 
-**Note:** Raw data files and intermediate results are *not* included in this repository due to size constraints and data access agreements. You must download the required input data (pQTLs, mQTLs, GWAS summary stats) before running the pipeline. 
+Raw input data are **not included** due to size and access restrictions. All sources are publicly available:
 
-For detailed information on data sources and how to acquire them, please see [docs/data_sources.md](docs/data_sources.md).
+| Data | Source | Access |
+|---|---|---|
+| FinnGen Olink pQTL (N=619) | FinnGen R10 | [finngen.fi](https://www.finngen.fi/en/access_results) |
+| Breast cancer GWAS | BCAC GCST90018757 (N=228,951) | [NHGRI-EBI GWAS Catalog](https://www.ebi.ac.uk/gwas/) |
+| Endometrial cancer GWAS | GCST006464 (N~12,906) | [NHGRI-EBI GWAS Catalog](https://www.ebi.ac.uk/gwas/) |
+| Ovarian cancer GWAS | GCST90016665 (N~25,509) | [NHGRI-EBI GWAS Catalog](https://www.ebi.ac.uk/gwas/) |
+| NMR metabolomics GWAS | Nightingale Health / MRC-IEU | [IEU Open GWAS](https://gwas.mrcieu.ac.uk/) |
+| ARIC SomaScan pQTL | Atherosclerosis Risk in Communities | [dbGaP](https://www.ncbi.nlm.nih.gov/gap/) |
+| OpenGWAS INTERVAL SomaScan | Sun et al. 2018, Nature | [IEU Open GWAS](https://gwas.mrcieu.ac.uk/) |
+| TCGA-BRCA RNA-seq | TCGA via Xena Browser | [xenabrowser.net](https://xenabrowser.net) |
+| CPTAC-BRCA proteomics | CPTAC-3 (UMich) | [cptac-data-portal.georgetown.edu](https://cptac-data-portal.georgetown.edu) |
+| TISCH scRNA-seq | EMTAB-8107 | [tisch.comp-genomics.org](http://tisch.comp-genomics.org) |
+| Human Protein Atlas | HPA v24 | [proteinatlas.org](https://www.proteinatlas.org) |
+| 1000 Genomes EUR LD | 1KGP Phase 3 | [internationalgenome.org](https://www.internationalgenome.org) |
 
-## Reproducibility
+---
 
-To ensure full reproducibility, the analytical pipeline has been strictly organized into sequential scripts. All random seeds are set within the scripts where applicable. 
+## Dependencies
 
-## Script Execution Order
+**R packages** (managed via `renv`):
+```r
+renv::restore()
+```
+Key packages: `TwoSampleMR` (v0.5.7), `coloc` (v5.2), `susieR`, `data.table`, `ggplot2`, `ggrepel`, `Rsamtools`, `GenomicRanges`, `magma` (external)
 
-The `scripts/` directory contains numbered scripts (`00_` through `59_`) that document the exact execution order. For a detailed breakdown of the workflow and what each script does, please consult [docs/workflow.md](docs/workflow.md).
+**Python** (for manuscript generation):
+```bash
+pip install python-docx
+```
 
-## Outputs
+**External tools:**
+- MAGMA v1.10 — [ctglab.nl/software/magma](https://ctglab.nl/software/magma)
 
-Generated figures and tables are structured as follows:
-* `manuscript_outputs/figures/main`: Main manuscript figures
-* `manuscript_outputs/figures/supplementary`: Supplementary figures
-* `manuscript_outputs/tables/supplementary`: Supplementary tables
+---
 
-## Maintainer
+## Quick Start
 
-Vijayachitra Modhukur
+```bash
+# 1. Clone
+git clone https://github.com/vijayachitrabio/multiomic-network-mr-cancer.git
+cd multiomic-network-mr-cancer
+
+# 2. Restore R environment
+Rscript -e "renv::restore()"
+
+# 3. Download input data (see Data Availability above)
+#    Place files in data/ following the structure in scripts/00_setup_env.R
+
+# 4. Run pipeline
+Rscript scripts/20_proteome_wide_mr_screen.R   # Phase 2 MR screen
+Rscript scripts/37_coloc_snx15_pm20d1.R        # Colocalization
+Rscript scripts/41_master_evidence_table.R     # Evidence integration
+```
+
+---
+
+## Citation
+
+> Modhukur V et al. Multi-omic triangulation of circulating proteins identifies novel breast cancer causal candidates. *Manuscript in preparation.* 2026.
+
+---
+
+## Contact
+
+**Vijayachitra Modhukur**  
+Institute of Molecular and Cell Biology, University of Tartu, Estonia  
+GitHub: [@vijayachitrabio](https://github.com/vijayachitrabio)
+
+---
+
+## License
+
+Code: MIT License  
+Data: subject to original data source access agreements (see Data Availability)
