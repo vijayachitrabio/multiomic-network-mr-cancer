@@ -2,7 +2,7 @@
 
 **Vijayachitra Modhukur** et al. | University of Tartu | 2026
 
-> Preprint / submitted to *Neoplasia* / *iScience*
+> 
 
 ---
 
