@@ -33,7 +33,7 @@ This repository contains all analysis code and output files for a proteome-wide 
 │   ├── pqtl/                   # FinnGen Olink pQTL summary stats
 │   ├── cancer_gwas/            # Breast/EC/OvC GWAS summary stats
 │   └── metabolomics/           # Nightingale NMR metabolite GWAS
-├── results/
+└── results/
 │   ├── figures/                # All figures (fig1–fig15, sfig1–6)
 │   ├── tables/                 # Supplementary tables (STable1–12)
 │   ├── phase2_protein_cancer/  # MR screen results
@@ -45,11 +45,6 @@ This repository contains all analysis code and output files for a proteome-wide 
 │   ├── scrna/                  # TISCH scRNA-seq cell-type enrichment
 │   ├── bidirectional/          # Reverse-direction MR
 │   └── mvmr/                   # MVMR feasibility
-└── submission_2026-05-20/      # Submission-ready package
-    ├── MANUSCRIPT_v1.5_submission.docx
-    ├── main_figures/           # fig1–fig15
-    ├── supplementary_figures/  # sfig1–6
-    └── supplementary_tables/   # STable1–12
 ```
 
 ---
