@@ -20,8 +20,8 @@ This repository contains all analysis code and output files for a proteome-wide 
 - Key methodological finding: **coloc.abf missed 2 of 8 colocalisations** (EFNA1, ATRAID); SuSiE essential for multi-signal loci
 
 ### Study Design
+<img width="3672" height="2380" alt="image" src="https://github.com/user-attachments/assets/4392a5cc-ea77-4dcf-a6e8-4ea4c0c10ed8" />
 
-![Mendelian Randomization Study Design vs Clinical Trial](results/figures/sfig_mr_design_multiomic.png)
 
 ---
 
