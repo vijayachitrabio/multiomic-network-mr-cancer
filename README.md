@@ -18,6 +18,8 @@ This repository contains all analysis code and output files for a proteome-wide 
 - 5 protein → metabolite (BCAA/Glycine) → breast cancer mediation paths
 - Multi-layer validation: TCGA-BRCA (N=1,097), CPTAC-BRCA (N=121), TISCH scRNA-seq, Human Protein Atlas, ARIC SomaScan + OpenGWAS INTERVAL replication
 - Key methodological finding: **coloc.abf missed 2 of 8 colocalisations** (EFNA1, ATRAID); SuSiE essential for multi-signal loci
+  <img width="1376" height="768" alt="image" src="https://github.com/user-attachments/assets/bda45f6b-da0e-4f17-bc87-ecc027a710f6" />
+
 
 ### Study Design
 <img width="3672" height="2380" alt="image" src="https://github.com/user-attachments/assets/4392a5cc-ea77-4dcf-a6e8-4ea4c0c10ed8" />
