@@ -1,5 +1,7 @@
 # Multi-Omic Network Mendelian Randomization for Female Cancers
 
+🚀 **Interactive Data Explorer:** [View the Live Shiny App](https://vijayachitrabio.github.io/multiomic-network-mr-cancer/)
+
 **Vijayachitra Modhukur** et al. | University of Tartu | 2026
 
 > 
