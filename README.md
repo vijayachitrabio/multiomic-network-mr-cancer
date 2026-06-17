@@ -35,7 +35,7 @@ This repository contains all analysis code and output files for a proteome-wide 
 │   ├── pqtl/                   # FinnGen Olink pQTL summary stats
 │   ├── cancer_gwas/            # Breast/EC/OvC GWAS summary stats
 │   └── metabolomics/           # Nightingale NMR metabolite GWAS
-└── results/
+├── results/
 │   ├── figures/                # All figures (fig1–fig15, sfig1–6)
 │   ├── tables/                 # Supplementary tables (STable1–12)
 │   ├── phase2_protein_cancer/  # MR screen results
