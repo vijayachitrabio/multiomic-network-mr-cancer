@@ -49,10 +49,10 @@ tier_pal <- c(T1 = "#dff0d8", T2a = "#d9edf7", T2b = "#fcf8e3", T2c = "#f5f5f5")
 app_theme <- bs_theme(
   version   = 5,
   bootswatch = "zephyr",
-  primary   = "#005b96",
-  secondary = "#b3cde0",
-  success   = "#28a745",
-  info      = "#17a2b8"
+  primary   = "#D55E00",
+  secondary = "#E69F00",
+  success   = "#009E73",
+  info      = "#56B4E9"
 )
 
 # Reusable static-image helper
@@ -69,7 +69,7 @@ static_img <- function(src, ...) {
 ui <- page_navbar(
   title   = "Multi-Omic Network MR",
   theme   = app_theme,
-  bg      = "#005b96",
+  bg      = "#D55E00",
   inverse = TRUE,
 
   # 1. Overview ----------------------------------------------------------------
@@ -392,7 +392,7 @@ server <- function(input, output, session) {
                                 "ER−: ", round(or_ERneg, 3),
                                 " (p=", signif(pval_ERneg, 2), ")"),
             hoverinfo = "text",
-            marker = list(size = 11, color = "#005b96", opacity = 0.85)) %>%
+            marker = list(size = 11, color = "#D55E00", opacity = 0.85)) %>%
       layout(
         xaxis = list(title = "OR — ER positive", range = c(lo, hi),
                      gridcolor = bl$gridcolor),
