@@ -57,8 +57,12 @@ app_theme <- bs_theme(
 
 # Reusable static-image helper
 static_img <- function(src, ...) {
+  # Fetch images directly from GitHub to prevent embedding them in the WebR bundle (reduces load time by >90%)
+  base_url <- "https://raw.githubusercontent.com/vijayachitrabio/multiomic-network-mr-cancer/main/results/figures/"
+  full_src <- paste0(base_url, src)
+  
   div(style = "text-align:center;",
-    img(src = src, style = paste(
+    img(src = full_src, style = paste(
       "max-width:100%; height:auto; border-radius:8px;",
       "box-shadow:0 4px 8px rgba(0,0,0,.12);", ...
     ))
