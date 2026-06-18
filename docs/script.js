@@ -62,23 +62,23 @@ function renderVolcanoPlot() {
       const data = results.data;
       
       // Separate into significant (FDR < 0.05) and non-significant
-      const sig = data.filter(d => d.mr_fdr < 0.05);
-      const nonsig = data.filter(d => d.mr_fdr >= 0.05 || d.mr_fdr === null);
+      const sig = data.filter(d => d.FDR < 0.05);
+      const nonsig = data.filter(d => d.FDR >= 0.05 || d.FDR === null);
       
       const traceSig = {
-        x: sig.map(d => d.mr_or ? Math.log(d.mr_or) : null),
-        y: sig.map(d => d.mr_pval ? -Math.log10(d.mr_pval) : null),
+        x: sig.map(d => d.OR ? Math.log(d.OR) : null),
+        y: sig.map(d => d.pvalue ? -Math.log10(d.pvalue) : null),
         mode: 'markers',
         type: 'scatter',
         name: 'FDR < 0.05',
         marker: { color: '#D55E00', size: 8, opacity: 0.8, line: {width:0.5, color:'white'} },
-        text: sig.map(d => `${d.protein} - ${d.cancer_outcome}<br>FDR: ${d.mr_fdr}`),
+        text: sig.map(d => `${d.protein} - ${d.cancer_outcome}<br>FDR: ${d.FDR}`),
         hoverinfo: 'text'
       };
       
       const traceNonSig = {
-        x: nonsig.map(d => d.mr_or ? Math.log(d.mr_or) : null),
-        y: nonsig.map(d => d.mr_pval ? -Math.log10(d.mr_pval) : null),
+        x: nonsig.map(d => d.OR ? Math.log(d.OR) : null),
+        y: nonsig.map(d => d.pvalue ? -Math.log10(d.pvalue) : null),
         mode: 'markers',
         type: 'scatter',
         name: 'Non-significant',
