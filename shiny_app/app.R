@@ -49,20 +49,16 @@ tier_pal <- c(T1 = "#dff0d8", T2a = "#d9edf7", T2b = "#fcf8e3", T2c = "#f5f5f5")
 app_theme <- bs_theme(
   version   = 5,
   bootswatch = "zephyr",
-  primary   = "#D55E00",
-  secondary = "#E69F00",
-  success   = "#009E73",
-  info      = "#56B4E9"
+  primary   = "#005b96",
+  secondary = "#b3cde0",
+  success   = "#28a745",
+  info      = "#17a2b8"
 )
 
 # Reusable static-image helper
 static_img <- function(src, ...) {
-  # Fetch images directly from GitHub to prevent embedding them in the WebR bundle (reduces load time by >90%)
-  base_url <- "https://raw.githubusercontent.com/vijayachitrabio/multiomic-network-mr-cancer/main/results/figures/"
-  full_src <- paste0(base_url, src)
-  
   div(style = "text-align:center;",
-    img(src = full_src, style = paste(
+    img(src = src, style = paste(
       "max-width:100%; height:auto; border-radius:8px;",
       "box-shadow:0 4px 8px rgba(0,0,0,.12);", ...
     ))
@@ -73,7 +69,7 @@ static_img <- function(src, ...) {
 ui <- page_navbar(
   title   = "Multi-Omic Network MR",
   theme   = app_theme,
-  bg      = "#D55E00",
+  bg      = "#005b96",
   inverse = TRUE,
 
   # 1. Overview ----------------------------------------------------------------
@@ -396,7 +392,7 @@ server <- function(input, output, session) {
                                 "ER−: ", round(or_ERneg, 3),
                                 " (p=", signif(pval_ERneg, 2), ")"),
             hoverinfo = "text",
-            marker = list(size = 11, color = "#D55E00", opacity = 0.85)) %>%
+            marker = list(size = 11, color = "#005b96", opacity = 0.85)) %>%
       layout(
         xaxis = list(title = "OR — ER positive", range = c(lo, hi),
                      gridcolor = bl$gridcolor),
