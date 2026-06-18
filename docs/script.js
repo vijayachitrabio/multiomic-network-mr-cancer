@@ -24,6 +24,20 @@ document.querySelectorAll('.nav-item').forEach(item => {
   });
 });
 
+// Lightbox Logic
+document.querySelectorAll('.img-responsive').forEach(img => {
+  img.addEventListener('click', function() {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    lightboxImg.src = this.src;
+    lightbox.classList.add('active');
+  });
+});
+
+document.getElementById('lightbox').addEventListener('click', function() {
+  this.classList.remove('active');
+});
+
 // Helper function to render a DataTable from a CSV
 function loadTable(csvUrl, tableId) {
   Papa.parse(csvUrl, {
