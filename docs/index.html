@@ -110,9 +110,12 @@
       </div>
     </div>
 
-    <!-- 2. Data & Tables -->
+    <!-- 8. Evidence -->
     <div id="tab-data" class="tab-pane">
-      <div class="card">
+      <div class="alert" style="background-color: var(--bg-light); border-left: 4px solid var(--primary-color); padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+        <strong>Evidence &amp; Druggability:</strong> Complete MR screen results, integrated multi-layer evidence tables for the 17 candidates, and Open Targets druggability assessments.
+      </div>
+      <div class="card mb-4">
         <div class="card-header">17 FDR-significant MR hits (Full panel)</div>
         <table id="table-fdr" class="display"></table>
       </div>
@@ -122,8 +125,11 @@
       </div>
     </div>
 
-    <!-- 3. Results Explorer -->
+    <!-- 2. MR Screen -->
     <div id="tab-results" class="tab-pane">
+      <div class="alert" style="background-color: var(--bg-light); border-left: 4px solid var(--primary-color); padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+        <strong>MR Screen &amp; Prioritisation:</strong> Proteome-wide volcano plot (MR Screen), Forest plot of effect estimates for 17 FDR-significant hits, Colocalization evidence comparison, and ER-subtype stratification.
+      </div>
       <div class="row">
         <div class="col-md-6">
           <div class="card">
@@ -156,6 +162,9 @@
 
     <!-- 4. Single-Cell -->
     <div id="tab-sc" class="tab-pane">
+      <div class="alert" style="background-color: var(--bg-light); border-left: 4px solid var(--primary-color); padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+        <strong>Single-Cell:</strong> TISCH single-cell RNA-sequencing data characterizing the cellular expression landscape of candidate proteins across major and minor lineages.
+      </div>
       <div class="card">
         <div class="card-header">TISCH Single-Cell RNA Heatmaps</div>
         <div class="row">
@@ -173,6 +182,9 @@
 
     <!-- 5. Mediation -->
     <div id="tab-mediation" class="tab-pane">
+      <div class="alert" style="background-color: var(--bg-light); border-left: 4px solid var(--primary-color); padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+        <strong>Mediation:</strong> Metabolic mediation analysis identifying potential indirect pathways where circulating proteins influence breast cancer risk via circulating metabolites.
+      </div>
       <div class="row">
         <div class="col-md-6">
           <div class="card">
@@ -191,6 +203,9 @@
 
     <!-- 6. Replication -->
     <div id="tab-replication" class="tab-pane">
+      <div class="alert" style="background-color: var(--bg-light); border-left: 4px solid var(--primary-color); padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+        <strong>Replication:</strong> Independent validation of our primary findings using ARIC SomaScan data and OpenGWAS look-ups.
+      </div>
       <div class="card">
         <div class="card-header">ARIC Cohort Replication</div>
         <img src="figures/fig7_aric_replication.png" class="img-responsive">
