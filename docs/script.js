@@ -11,6 +11,16 @@ document.querySelectorAll('.nav-item').forEach(item => {
     this.classList.add('active');
     const targetId = this.getAttribute('data-target');
     document.getElementById(targetId).classList.add('active');
+    
+    // Fix Plotly rendering in hidden tabs (otherwise they draw at 0x0 size)
+    if (targetId === 'tab-results') {
+      window.dispatchEvent(new Event('resize'));
+    }
+    
+    // Fix DataTables header squeezing in hidden tabs
+    if (targetId === 'tab-data' || targetId === 'tab-mediation') {
+      $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+    }
   });
 });
 
