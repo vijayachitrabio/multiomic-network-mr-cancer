@@ -40,28 +40,67 @@
     
     <!-- 1. Overview -->
     <div id="tab-overview" class="tab-pane active">
+      <div class="card mb-4">
+        <div class="card-header">Overview</div>
+        <p>This interactive companion provides full access to the data, figures, and evidence tables underlying our multi-omic Mendelian randomisation (MR) study of circulating proteins and breast cancer risk.</p>
+        <p><strong>Study:</strong> Using cis-protein quantitative trait loci (cis-pQTLs) from the FinnGen Olink proteomics platform (N = 619) as genetic instruments, we performed a proteome-wide two-sample MR screen of 701 circulating proteins against breast cancer (BCAC GWAS, up to 247,173 participants). Seventeen protein–cancer associations survived Benjamini–Hochberg false discovery rate correction (FDR &lt; 0.05). Candidate proteins were subsequently triangulated through colocalization (coloc.abf and coloc.SuSiE), gene-level GWAS enrichment (MAGMA), ER-subtype stratification, metabolic mediation analysis, immune tumour microenvironment profiling, and replication in an independent proteomics platform (ARIC SomaScan).</p>
+      </div>
+
       <div class="row">
-        <div class="col-md-4">
-          <div class="card">
-            <div class="card-header">About</div>
-            <p>Interactive supplement to:</p>
-            <p><strong>Multi-omic triangulation of circulating proteins identifies novel breast cancer causal candidates.</strong></p>
-            <hr>
-            <p><em>Modhukur V et al. 2026</em></p>
-            <hr>
-            <p><a href="https://github.com/vijayachitrabio/multiomic-network-mr-cancer" target="_blank">View on GitHub</a></p>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <div class="card-header">Evidence tiers</div>
+            <p>Proteins were classified into four evidence tiers based on the breadth of corroborating evidence:</p>
+            <table class="dataTable" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th>Tier</th>
+                  <th>Criteria</th>
+                  <th>Proteins</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>T1</strong> — Highest confidence</td>
+                  <td>MR + dual colocalization (ABF and SuSiE PPH4 ≥ 0.80)</td>
+                  <td>EFNA1, TNFRSF6B, ATRAID, FGF5, ABO</td>
+                </tr>
+                <tr>
+                  <td><strong>T2a</strong> — High confidence</td>
+                  <td>MR + ABF-only colocalization (PPH4 ≥ 0.80)</td>
+                  <td>SNX15, PM20D1, UMOD</td>
+                </tr>
+                <tr>
+                  <td><strong>T2b</strong> — Moderate confidence</td>
+                  <td>MR + partial colocalization support</td>
+                  <td>APOE, TSPAN8</td>
+                </tr>
+                <tr>
+                  <td><strong>T2c</strong> — MR-supported</td>
+                  <td>MR signal only; colocalization not significant</td>
+                  <td>7 proteins</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="card">
-            <div class="card-header">Key findings</div>
+          
+          <div class="card mb-4">
+            <div class="card-header">How to navigate this page</div>
             <ul>
-              <li>701 proteins screened; cis-pQTLs (N = 619).</li>
-              <li>17 protein–cancer associations.</li>
-              <li><strong>5 Tier 1:</strong> EFNA1, TNFRSF6B, ATRAID, FGF5, ABO.</li>
-              <li><strong>3 Tier 2a:</strong> IL34, SWAP70, UMOD.</li>
+              <li><strong>MR Screen</strong> — Proteome-wide volcano plot of all 701 × 3 protein–cancer tests.</li>
+              <li><strong>Forest Plot</strong> — Effect estimates (odds ratio, 95% CI) for all 17 FDR-significant associations.</li>
+              <li><strong>Colocalization</strong> — PPH4 posterior probabilities from coloc.abf and coloc.SuSiE.</li>
+              <li><strong>ER Subtypes</strong> — ER-positive vs ER-negative subtype stratification.</li>
+              <li><strong>MAGMA</strong> — Gene-level GWAS enrichment confirming overlap.</li>
+              <li><strong>Replication</strong> — Independent validation using ARIC and OpenGWAS.</li>
+              <li><strong>Immune</strong> — Tumour immune microenvironment correlations.</li>
+              <li><strong>Evidence</strong> — Integrated multi-layer evidence table.</li>
+              <li><strong>Druggability</strong> — Open Targets druggability assessment.</li>
+              <li><strong>Mediation</strong> — Metabolic mediation analysis identifying indirect pathways.</li>
             </ul>
           </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
           <div class="card" style="height: 100%; display: flex; flex-direction: column;">
             <div class="card-header">Multi-Omic Triangulation Design</div>
             <img src="figures/graphical_abstract_MR.png" class="img-responsive" style="margin: auto 0; object-fit: contain; max-height: 80vh;" alt="Graphical Abstract">
