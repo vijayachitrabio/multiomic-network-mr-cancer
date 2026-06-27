@@ -76,3 +76,10 @@ TALK_ProteomeMR_BreastCancer_2026.pptx
 graphical_abstract_pp.ppt
 unpacked_v16/
 .claude/
+DRUGGABILITY_SUMMARY_*.md
+eQTL_TNFRSF6B_feasibility_*.md
+create_talk.js
+enrich_druggability.py
+eQTL_TNFRSF6B_check.py
+trial_alluvial_evidence_flow.*
+work_*/
