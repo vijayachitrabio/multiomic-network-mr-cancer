@@ -4,7 +4,6 @@
 # SFig 1 — Volcano plot: all 701 proteins × breast cancer (−log10p vs β)
 # SFig 2 — Per-SNP Wald ratio directional consistency for 2-SNP proteins
 # SFig 3 — Steiger directionality: r² protein vs r² cancer per instrument
-# SFig 4 — UKB observational: p-value vs delta-NPX with FDR threshold
 # SFig 5 — ER subtype pattern summary (pie/bar of ER_pos_specific etc.)
 
 set.seed(42)
@@ -179,46 +178,6 @@ if (all(c("r2_exp", "r2_out") %in% names(stei))) {
   save_fig(sfig3, "sfig3_steiger_r2", w = 7.5, h = 6)
 }
 
-# ============================================================
-# SFig 4 — UKB Observational: volcano for breast proteins
-# ============================================================
-cat("SFig 4: Observational volcano\n")
-
-obs <- fread(file.path(project_dir, "results", "observational", "ukb_triangulation_summary.csv"))
-obs_br <- obs[cancer == "Breast"]
-obs_br[, log10p := -log10(pval_obs)]
-obs_br[, triangulates_label := fifelse(is.na(triangulates), "NA",
-                                fifelse(triangulates, "Agree", "Disagree"))]
-obs_br[, obs_fdr_thresh := fdr_obs < 0.05]
-
-sfig4 <- ggplot(obs_br, aes(x = delta_npx, y = log10p,
-                              colour = triangulates_label,
-                              shape  = obs_fdr_thresh,
-                              label  = protein)) +
-  geom_hline(yintercept = -log10(0.05), linetype = "dashed",
-             colour = "grey50", linewidth = 0.4) +
-  geom_vline(xintercept = 0, linetype = "dashed",
-             colour = "grey50", linewidth = 0.4) +
-  geom_point(size = 3.5) +
-  geom_text_repel(size = 3.2, max.overlaps = 20, box.padding = 0.5, seed = 42) +
-  scale_colour_manual(name = "MR vs\nobservational",
-    values = c(Agree = "#2C9E5B", Disagree = "#C0392B", `NA` = "grey60")) +
-  scale_shape_manual(name = "Obs. FDR",
-    values = c(`TRUE` = 16, `FALSE` = 1),
-    labels = c("< 0.05", "≥ 0.05")) +
-  annotate("text", x = max(obs_br$delta_npx, na.rm=TRUE) * 0.8,
-           y = -log10(0.05) + 0.15,
-           label = "p = 0.05", size = 3, colour = "grey40") +
-  labs(
-    title    = "[REDACTED] observational validation: breast cancer proteins",
-    subtitle = "52,995 UKB participants; 2,010 breast cases vs 39,169 no-cancer controls; unadjusted",
-    x        = "Delta-NPX: mean(cases) - mean(controls)",
-    y        = expression(-log[10](p["observational"]))
-  ) +
-  theme_bw(base_size = 11) +
-  theme(plot.title = element_text(face = "bold", size = 12))
-
-save_fig(sfig4, "sfig4_observational_breast", w = 8.5, h = 6)
 
 # ============================================================
 # SFig 5 — ER Subtype Pattern Summary

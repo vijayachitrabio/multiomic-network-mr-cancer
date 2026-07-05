@@ -85,3 +85,5 @@ trial_alluvial_evidence_flow.*
 work_*/
 scripts/34_build_presentation.py
 scripts/43_project_summary_email_doc.py
+scripts/23_ukb_observational_validation.R
+sfig4_observational_breast.png
