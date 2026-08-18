@@ -59,6 +59,7 @@ We\ mapped*.docx
 fill_manuscript_placeholders.py
 build_presentation.py
 project_summary_email_doc.py
+STUDENT_*_GUIDE.txt
 
 # R dependencies and RStudio files
 r_libs/
