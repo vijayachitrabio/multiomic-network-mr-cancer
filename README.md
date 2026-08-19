@@ -12,6 +12,8 @@
 
 This repository contains analysis code, summary outputs, and manuscript-supporting materials for a proteome-wide Mendelian randomization study integrating circulating protein genetics, cancer GWAS, metabolite colocalization, mediation MR, gene-level triangulation, and tumour-context annotation.
 
+Prior proteome-wide MR studies have established the value of plasma protein genetics for breast cancer target prioritization [4,5]. The present study extends that literature by moving beyond association-level discovery toward multi-layer evidence triangulation, integrating MR with fine-mapping-aware colocalization, MAGMA gene-level support, metabolite colocalization and mediation, cross-platform pQTL sensitivity analyses, and tumour-context annotation. This distinction is important because genetically proxied protein–cancer associations may arise from linkage disequilibrium, assay-specific pQTL architecture, or pleiotropic regional effects. The evidence hierarchy used here was therefore designed to separate protein candidates with stronger shared genetic support from secondary signals supported by gene-level, replication, metabolic, or tumour-context evidence alone.
+
 The study prioritizes genetically supported circulating protein and metabolic pathways associated with breast cancer susceptibility, with endometrial and ovarian cancers included as hormone-related comparator outcomes.
 
 The analysis combines:
