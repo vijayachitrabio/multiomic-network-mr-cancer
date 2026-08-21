@@ -39,6 +39,10 @@ The analysis combines:
 - Protein–metabolite–breast cancer mediation analyses highlighted pathways involving branched-chain amino acid and glycine-related metabolic traits.
 - Tumour-context analyses supported immune, stromal, and metabolic interpretations for selected prioritized proteins.
 - A methodological finding was that coloc.abf missed or misclassified colocalization at multi-signal loci such as **EFNA1** and **ATRAID**, whereas SuSiE-based colocalization resolved shared signals.
+- Independent cross-platform validation using the deCODE genetics platform replicated the primary breast cancer signals with consistent directionality.
+- Leave-one-locus-out sensitivity analyses of pleiotropic hubs (e.g., GCKR) demonstrated that the nominated metabolic mediation pathways are robust and not exclusively driven by single massive loci.
+
+<img width="800" alt="deCODE Validation Forest Plot" src="results/figures/decode_validation_forest_plot.png" />
 
 ---
 
