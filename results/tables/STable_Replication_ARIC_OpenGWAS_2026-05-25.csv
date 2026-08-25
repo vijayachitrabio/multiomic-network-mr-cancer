@@ -1,0 +1,18 @@
+protein,cancer,tier,discovery_OR_95CI,discovery_p,discovery_dir,ARIC_nSNP,ARIC_method,ARIC_OR_95CI,ARIC_p,ARIC_direction,ARIC_status,OpenGWAS_nSNP,OpenGWAS_method,OpenGWAS_OR_95CI,OpenGWAS_p,OpenGWAS_direction,OpenGWAS_status
+SNX15,Breast,T2,0.917 [0.898-0.937],1.51e-15,↓,0,—,—,—,—,— (no instrument),0,—,—,—,—,— (no instrument)
+EFNA1,Breast,T1,1.136 [1.099-1.174],6.07e-14,↑,0,—,—,—,—,— (no instrument),0,—,—,—,—,— (no instrument)
+FGF5,Breast,T1,0.960 [0.949-0.970],7.26e-14,↓,0,—,—,—,—,— (no instrument),0,—,—,—,—,— (no instrument)
+UMOD,Breast,T2a,1.024 [1.015-1.034],5.17e-07,↑,0,—,—,—,—,— (no instrument),0,—,—,—,—,— (no instrument)
+SWAP70,Breast,T2,1.044 [1.024-1.065],1.13e-05,↑,1,Wald ratio,1.051 [1.028-1.075],1.32e-05,↑,✓,0,—,—,—,—,— (no instrument)
+ATRAID,Breast,T1,0.956 [0.937-0.976],1.88e-05,↓,0,—,—,—,—,— (no instrument),0,—,—,—,—,— (no instrument)
+TNFRSF6B,Breast,T1,1.036 [1.019-1.053],2.37e-05,↑,0,—,—,—,—,— (no instrument),0,—,—,—,—,— (no instrument)
+ABO,Endometrial,T1,1.049 [1.028-1.070],4.38e-06,↑,6,Inverse variance weighted,1.052 [1.025-1.080],1.25e-04,↑,✓,0,—,—,—,—,— (no instrument)
+ITIH3,Breast,T2,0.959 [0.940-0.979],5.47e-05,↓,1,Wald ratio,0.971 [0.958-0.985],3.98e-05,↓,✓,3,Inverse variance weighted,0.974 [0.963-0.986],1.37e-05,↓,✓
+KLB,Breast,T2,1.015 [1.007-1.022],4.93e-05,↑,4,Inverse variance weighted,1.019 [1.010-1.029],1.17e-04,↑,✓,0,—,—,—,—,— (no instrument)
+PM20D1,Breast,T2,1.013 [1.006-1.019],8.79e-05,↑,0,—,—,—,—,— (no instrument),0,—,—,—,—,— (no instrument)
+TSPAN8,Breast,T2,0.966 [0.949-0.983],1.23e-04,↓,0,—,—,—,—,— (no instrument),0,—,—,—,—,— (no instrument)
+FGFR4,Breast,T2,0.988 [0.981-0.994],3.64e-04,↓,0,—,—,—,—,— (no instrument),0,—,—,—,—,— (no instrument)
+IL34,Breast,T2,1.024 [1.011-1.038],3.97e-04,↑,0,—,—,—,—,— (no instrument),1,Wald ratio,0.978 [0.902-1.059],0.5774,↓,✗ (p≥0.05)
+APOE,Breast,T2,1.017 [1.008-1.027],5.68e-04,↑,0,—,—,—,—,— (no instrument),0,—,—,—,—,— (no instrument)
+CGREF1,Breast,T2,1.027 [1.011-1.043],7.47e-04,↑,0,—,—,—,—,— (no instrument),0,—,—,—,—,— (no instrument)
+INHBB,Breast,T2,1.026 [1.010-1.041],9.17e-04,↑,1,Wald ratio,1.040 [1.016-1.064],9.17e-04,↑,✓,0,—,—,—,—,— (no instrument)

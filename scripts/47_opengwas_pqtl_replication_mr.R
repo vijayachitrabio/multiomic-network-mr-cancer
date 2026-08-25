@@ -128,6 +128,7 @@ for (i in seq_len(nrow(outcomes))) {
     } else {
       c("mr_ivw", "mr_egger_regression", "mr_weighted_median")
     }
+    set.seed(20260525)
     res <- tryCatch(mr(harm, method_list = methods), error = function(e) NULL)
     if (is.null(res) || nrow(res) == 0) next
     res <- as.data.table(generate_odds_ratios(res))

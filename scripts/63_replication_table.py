@@ -7,7 +7,7 @@ Date: 2026-05-25
 """
 import csv, math, os
 
-PROJ = "/Users/vijayachitramodhukur/Library/Mobile Documents/com~apple~CloudDocs/ECLAI/MultiOmic_Network_MR_Project"
+PROJ = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 # ── Load discovery results (all 17 proteins) ────────────────────────────────
 discovery = {}
@@ -44,34 +44,21 @@ with open(f"{PROJ}/results/opengwas/opengwas_5protein_replication_mr_results.csv
         if key not in opengwas or method == 'Inverse variance weighted':
             opengwas[key] = r
 
-# ── All 17 proteins with their discovery cancer ──────────────────────────────
-proteins_17 = [
-    # Tier 1
-    ("EFNA1",    "Breast_GCST90018757",   "T1"),
-    ("TNFRSF6B", "Breast_GCST90018757",   "T1"),
-    ("ATRAID",   "Breast_GCST90018757",   "T1"),
-    ("FGF5",     "Breast_GCST90018757",   "T1"),
-    ("UMOD",     "Breast_GCST90018757",   "T1"),
-    ("ABO",      "Endometrial_GCST006464","T1"),
-    # Tier 2a
-    ("SNX15",    "Breast_GCST90018757",   "T2a"),
-    ("PM20D1",   "Breast_GCST90018757",   "T2a"),
-    # Tier 2b
-    ("TSPAN8",   "Breast_GCST90018757",   "T2b"),
-    ("APOE",     "Breast_GCST90018757",   "T2b"),
-    # Tier 2c
-    ("TSPAN8",   "Breast_GCST90018757",   "T2c"),  # placeholder — confirm with manuscript
-    ("IL34",     "Breast_GCST90018757",   "T2c"),
-    ("APOB",     "Breast_GCST90018757",   "T2c"),
-    ("FGFR4",    "Breast_GCST90018757",   "T2c"),
-    ("ITIH3",    "Breast_GCST90018757",   "T2c"),
-    ("SNX13",    "Breast_GCST90018757",   "T2c"),
-    ("TNFRSF11A","Breast_GCST90018757",   "T2c"),
-    # Additional proteins with ARIC hits
-    ("KLB",      "Breast_GCST90018757",   "T2c"),
-    ("INHBB",    "Breast_GCST90018757",   "T2c"),
-    ("SWAP70",   "Breast_GCST90018757",   "T2c"),
-]
+def tier_from_coloc(row):
+    verdict = row.get("final_verdict", "")
+    tier_impact = row.get("tier_impact", "")
+    if "Tier 2a" in tier_impact:
+        return "T2a"
+    if verdict == "STRONG colocalization":
+        return "T1"
+    return "T2"
+
+coloc_tier = {}
+coloc_path = f"{PROJ}/results/tables/STable8_protein_coloc.csv"
+if os.path.exists(coloc_path):
+    with open(coloc_path) as f:
+        for r in csv.DictReader(f):
+            coloc_tier[r["protein"]] = tier_from_coloc(r)
 
 # Deduplicate and use discovery data to get the actual 17
 actual_17 = []
@@ -137,7 +124,7 @@ rows = []
 for disc in actual_17:
     prot   = disc['protein']
     cancer = disc['cancer']
-    tier   = "T1" if disc.get('protein','') in ["EFNA1","TNFRSF6B","ATRAID","FGF5","UMOD","ABO"] else "T2"
+    tier   = coloc_tier.get(prot, "T2")
     b_disc = disc.get('beta', disc.get('b', ''))
     se_disc = disc.get('se', '')
     p_disc = disc.get('pvalue', '')
