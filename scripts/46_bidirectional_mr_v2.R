@@ -1,11 +1,35 @@
 #!/usr/bin/env Rscript
 ## Script 48 v3: Bidirectional MR (breast cancer liability → protein level)
-## Strategy: for each protein, fetch pQTL cis data (hg38) and breast GWAS GWS
-##   data (hg19), then match by position within ±200 bp + allele concordance.
-##   Works because hg19 ≈ hg38 for most autosomal non-centromeric SNPs.
+## Strategy: for each protein, fetch FinnGen pQTL cis data and breast GWAS GWS
+##   data, then match on position + allele concordance.
+##
+## GENOME BUILD: both sides are GRCh38. The BCAC file used here is the GWAS
+##   Catalog *harmonised* release (Breast_GCST90018757.h.tsv.gz), in which
+##   `base_pair_location` is already lifted to GRCh38 (hm_coordinate_conversion
+##   column present). Verified empirically: GRCh38 cis-pQTL instrument positions
+##   match `base_pair_location` exactly (e.g. 1:1023525 AGRN rs2710890).
+##   An earlier version of this header incorrectly described the GWAS side as
+##   hg19 and justified a ±200 bp tolerance as liftover slack. That was wrong:
+##   no cross-build tolerance is required, so matching is now exact (tolerance 0).
 ##
 ## Proteins covered: those on chr 1,2,3,11,16,19,20 (1kG VCF available)
 ## Output: results/bidirectional/bidirectional_v2_*.csv
+##
+## PROVENANCE OF ARCHIVED RESULTS (read before citing results/bidirectional/):
+##   The files currently in results/bidirectional/ were generated with the
+##   earlier POS_TOL_BP = 200L setting, i.e. BEFORE the tolerance was corrected
+##   to 0 above. Because both datasets are GRCh38, tightening the tolerance can
+##   only ever REMOVE a match (a variant matched at 1-200 bp offset with
+##   concordant alleles), never add one. The archived result is 7 proteins with
+##   estimable reverse effects and 5 with no genome-wide significant breast
+##   variant in the cis window, of which only ITIH3 reached nominal
+##   significance - i.e. the reported "sparse, no consistent evidence"
+##   conclusion cannot be strengthened by the tolerance change, only left
+##   unchanged or made more sparse.
+##   Rerunning is nonetheless advisable so script and output agree. It requires
+##   TwoSampleMR, Rsamtools and GenomicRanges plus network access to the FinnGen
+##   public tabix endpoint; none of these were available in the environment
+##   where the tolerance fix was made.
 
 suppressPackageStartupMessages({
   library(data.table); library(TwoSampleMR)
@@ -18,7 +42,7 @@ out_dir <- file.path(proj, "results", "bidirectional")
 P_THRESH    <- 5e-8
 WINDOW_KB   <- 500L
 F_THRESH    <- 10
-POS_TOL_BP  <- 200L      # hg19 vs hg38 position tolerance for matching
+POS_TOL_BP  <- 0L        # both sides are GRCh38 - exact position matching
 
 priority_proteins <- c("SNX15","EFNA1","UMOD","IL34","PM20D1","CGREF1","ATRAID",
                         "ITIH3","TNFRSF6B","SWAP70","INHBB","APOE")
@@ -64,9 +88,9 @@ gw <- fread(cmd=sprintf("gunzip -c '%s'", gwas_path),
             select=c("chromosome","base_pair_location","effect_allele",
                      "other_allele","beta","standard_error",
                      "effect_allele_frequency","p_value","rsid"))
-setnames(gw, c("chr","pos37","ea","oa","beta","se","eaf","pval","rsid"))
+setnames(gw, c("chr","pos38","ea","oa","beta","se","eaf","pval","rsid"))
 gw[, ':='(chr   = suppressWarnings(as.integer(chr)),
-           pos37 = suppressWarnings(as.integer(pos37)),
+           pos38 = suppressWarnings(as.integer(pos38)),
            beta  = suppressWarnings(as.numeric(beta)),
            se    = suppressWarnings(as.numeric(se)),
            eaf   = suppressWarnings(as.numeric(eaf)),
@@ -82,8 +106,8 @@ clump_simple <- function(dt) {
   setorder(dt, pval)
   keep <- logical(nrow(dt)); kept_pos <- numeric()
   for (i in seq_len(nrow(dt))) {
-    if (!length(kept_pos) || all(abs(dt$pos37[i]-kept_pos) > WINDOW_KB*1000L)) {
-      keep[i] <- TRUE; kept_pos <- c(kept_pos, dt$pos37[i])
+    if (!length(kept_pos) || all(abs(dt$pos38[i]-kept_pos) > WINDOW_KB*1000L)) {
+      keep[i] <- TRUE; kept_pos <- c(kept_pos, dt$pos38[i])
     }
   }
   dt[keep]
@@ -105,9 +129,8 @@ for (i in seq_len(nrow(probe_map))) {
 
   message(sprintf("\n── %s (chr%d) ──", prot, chr_p))
 
-  # Breast GWS instruments in the cis window (hg19 pos, compare vs hg38 gene coords)
-  # chr1-20 hg19 ≈ hg38 to within ~1 Mb — the ±1 Mb window absorbs any drift
-  inst <- gw_c[chr==chr_p & pos37>=p_s & pos37<=p_e]
+  # Breast GWS instruments in the cis window (both GRCh38; ±1 Mb around gene)
+  inst <- gw_c[chr==chr_p & pos38>=p_s & pos38<=p_e]
   message(sprintf("  Breast GWS in cis window: %d", nrow(inst)))
   if (!nrow(inst)) {
     qc_list[[prot]] <- data.table(protein=prot,n_inst=0,n_matched=0,
@@ -124,10 +147,10 @@ for (i in seq_len(nrow(probe_map))) {
   }
   message(sprintf("  pQTL variants in region: %d", nrow(pqtl)))
 
-  # Position + allele matching (hg19 GWAS pos vs hg38 pQTL pos, ±POS_TOL_BP)
+  # Position + allele matching (both GRCh38; POS_TOL_BP = 0 -> exact)
   matched <- list()
   for (j in seq_len(nrow(inst))) {
-    pos_j  <- inst$pos37[j]
+    pos_j  <- inst$pos38[j]
     ap_j   <- inst$allele_pair[j]
     ap_j_rc<- inst$allele_pair_rc[j]
     hits   <- pqtl[abs(pos38 - pos_j) <= POS_TOL_BP &
@@ -141,10 +164,11 @@ for (i in seq_len(nrow(probe_map))) {
   }
 
   if (!length(matched)) {
-    # Relax tolerance ×5
-    message("  No matches at ±200bp; trying ±1000bp...")
+    # Retained as a diagnostic only: with both sides on GRCh38 an exact-position
+    # miss means the variant is genuinely absent from the pQTL file, not shifted.
+    message("  No exact-position matches; retrying with ±1000bp as diagnostic...")
     for (j in seq_len(nrow(inst))) {
-      pos_j  <- inst$pos37[j]
+      pos_j  <- inst$pos38[j]
       ap_j   <- inst$allele_pair[j]
       ap_j_rc<- inst$allele_pair_rc[j]
       hits   <- pqtl[abs(pos38 - pos_j) <= 1000L &

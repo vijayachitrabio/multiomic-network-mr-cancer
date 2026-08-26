@@ -47,8 +47,12 @@ hit_map <- data.table(
   protein = c("SNX15","EFNA1","FGF5","UMOD","SWAP70","ATRAID","TNFRSF6B",
               "ITIH3","KLB","PM20D1","TSPAN8","FGFR4","IL34","APOE",
               "CGREF1","INHBB","ABO"),
+  # NOTE: KLB (beta-klotho, chr4:39.41-39.45 Mb) is the correct cis gene for the
+  # KLB pQTL instruments (4:39448609, 4:39450812). An earlier version of this map
+  # entered "RIMKLB" here, which is an unrelated gene on chr12 (8.83-8.94 Mb) and
+  # cannot be the cis gene for a chr4 pQTL. Corrected to "KLB".
   magma_symbol = c("SNX15","EFNA1","FGF5","UMOD","SWAP70","ATRAID","TNFRSF6B",
-                   "ITIH3","RIMKLB","PM20D1","TSPAN8","FGFR4","IL34","APOE",
+                   "ITIH3","KLB","PM20D1","TSPAN8","FGFR4","IL34","APOE",
                    "CGREF1","INHBB","ABO")
 )
 

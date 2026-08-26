@@ -5,7 +5,9 @@
 # Female hormone-sensitive cancers only (prostate excluded by design):
 #   1. Endometrial cancer  — O'Mara et al 2018, GWAS Catalog GCST006464
 #                            12,906 cases / 108,979 controls (ECAC)
-#   2. Ovarian cancer      — Phelan et al, GWAS Catalog GCST90016665
+#   2. Ovarian cancer      — Dareng et al 2022 (PMID 35027648), GWAS Catalog GCST90016665
+#                            non-mucinous EOC, 23,564 cases / 40,138 controls.
+#                            NOTE: this is NOT Phelan 2017 (that is GCST004415).
 #                            25,509 cases / 40,138 controls (OCAC)
 #   3. Breast cancer       — Zhang et al 2020 Nature Genetics, GCST90018757
 #                            122,977 cases / 105,974 controls (BCAC)
