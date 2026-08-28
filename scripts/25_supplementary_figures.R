@@ -207,7 +207,7 @@ sfig5 <- ggplot(pattern_counts, aes(x = pattern_f, y = N, fill = pattern_f, labe
     )) +
   scale_y_continuous(limits = c(0, max(pattern_counts$N) + 2), expand = c(0, 0)) +
   labs(
-    title    = "ER subtype specificity of breast cancer protein associations",
+    title    = "Nominal ER-subtype association patterns among MR-prioritized proteins",
     subtitle = sprintf("16 FDR < 0.05 breast proteins; nominal significance threshold p < 0.05 per subtype"),
     x        = NULL,
     y        = "Number of proteins"
