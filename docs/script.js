@@ -86,8 +86,8 @@ function renderVolcanoPlot() {
       const data = results.data;
       
       // Separate into significant (FDR < 0.05) and non-significant
-      const sig = data.filter(d => d.FDR < 0.05);
-      const nonsig = data.filter(d => d.FDR >= 0.05 || d.FDR === null);
+      const sig = data.filter(d => d.FDR !== null && d.FDR !== "" && d.FDR < 0.05);
+      const nonsig = data.filter(d => d.FDR === null || d.FDR === "" || d.FDR >= 0.05);
       
       const traceSig = {
         x: sig.map(d => d.OR ? Math.log(d.OR) : null),

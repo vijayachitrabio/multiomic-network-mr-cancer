@@ -88,3 +88,17 @@ scripts/34_build_presentation.py
 scripts/43_project_summary_email_doc.py
 scripts/23_ukb_observational_validation.R
 sfig4_observational_breast.png
+
+# Ignored per sync instructions
+test.tsv
+replacements.txt
+*.png
+!docs/figures/*.png
+!results/figures/*.png
+!results/decode/*.png
+*.bak_*
+*.docx
+*.pdf
+.DS_Store
+submission_2026-08-26/
+archive/

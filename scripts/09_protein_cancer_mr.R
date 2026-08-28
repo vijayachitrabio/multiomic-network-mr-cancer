@@ -11,7 +11,14 @@
 #      and prevalence). Without these parameters, TwoSampleMR::steiger_filtering()
 #      systematically drops all protein instruments — a false negative.
 #      Instead, sensitivity is assessed via MR-Egger and weighted median.
-#   3. FDR correction applied within each cancer outcome separately.
+#   3. FDR correction applied within each cancer outcome separately, on the PRIMARY
+#      estimate per protein only (Wald ratio for single-SNP instruments, IVW for
+#      multi-SNP instruments). MR-Egger and weighted-median rows are sensitivity
+#      analyses of the same hypothesis and must NOT be re-entered into the BH
+#      procedure — doing so inflates the effective hypothesis count and biases
+#      q-values upward. Fixed 2026-08-28 after external peer review caught the
+#      pooled-methods FDR bug (previously p.adjust() ran across all 4 method rows
+#      per outcome instead of one row per protein).
 #   4. Methods: Wald ratio (1 SNP), IVW + MR-Egger + Weighted median (>1 SNP).
 
 set.seed(42)
@@ -104,7 +111,14 @@ for (f in harm_files) {
 fwrite(qc_log, file.path(out_dir, "protein_cancer_qc_log.csv"))
 
 if (nrow(mr_results_all) > 0) {
-  mr_results_all[, fdr := p.adjust(pval, method = "BH"), by = outcome]
+  # FDR is a per-hypothesis (per-protein-per-outcome) quantity. Compute it only on
+  # the primary estimate (Wald ratio for nsnp==1, IVW for nsnp>1) so the BH
+  # denominator is the true number of proteins tested, not proteins x methods.
+  mr_results_all[, is_primary_estimate :=
+    (method == "Wald ratio" & nsnp == 1) | (method == "Inverse variance weighted" & nsnp > 1)]
+  mr_results_all[, fdr := NA_real_]
+  mr_results_all[is_primary_estimate == TRUE,
+    fdr := p.adjust(pval, method = "BH"), by = outcome]
   fwrite(mr_results_all, file.path(out_dir, "protein_cancer_mr_results_full.csv"))
   sig <- mr_results_all[fdr < 0.05]
   fwrite(sig, file.path(out_dir, "protein_cancer_mr_results_significant.csv"))

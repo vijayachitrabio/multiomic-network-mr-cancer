@@ -31,7 +31,7 @@
       <li class="nav-item" data-target="tab-results">Results Explorer</li>
       <li class="nav-item" data-target="tab-sc">Single-Cell</li>
       <li class="nav-item" data-target="tab-mediation">Mediation</li>
-      <li class="nav-item" data-target="tab-replication">Replication</li>
+      <li class="nav-item" data-target="tab-sensitivity">Cross-platform pQTL sensitivity</li>
     </ul>
   </nav>
 
@@ -46,9 +46,9 @@
       </div>
 
       <div class="card mb-4">
-        <div class="card-header">Overview</div>
-        <p>This interactive companion provides access to the data summary, figures, and evidence tables underlying our multi-omic Mendelian randomisation (MR) study of circulating proteins and breast cancer risk.</p>
-        <p><strong>Study:</strong> Using cis-protein quantitative trait loci (cis-pQTLs) from the FinnGen Olink proteomics platform (N = 619) as genetic instruments, we performed a proteome-wide two-sample MR screen of 701 circulating proteins against breast cancer (BCAC GWAS, up to 247,173 participants). Seventeen protein–cancer associations survived Benjamini–Hochberg false discovery rate correction (FDR &lt; 0.05). Candidate proteins were subsequently triangulated through colocalization (coloc.abf and coloc.SuSiE), gene-level GWAS enrichment (MAGMA), ER-subtype stratification, metabolic mediation analysis, immune tumour microenvironment profiling, and replication in an independent proteomics platform (ARIC SomaScan).</p>
+        <div class="header-content">
+        <h1>Integrative proteogenomic and metabolomic triangulation prioritizes genetically supported circulating protein pathways in breast cancer susceptibility</h1>
+        <p><strong>Study:</strong> Using cis-protein quantitative trait loci (cis-pQTLs) from the FinnGen Olink proteomics platform (N = 619) as genetic instruments, we performed a proteome-wide two-sample MR screen of ~2,900 assayed proteins against breast cancer (BCAC GWAS, N = 228,951). 701 proteins met cis-instrument criteria. After outcome-specific harmonization, 504 / 614 / 582 proteins were analysed for breast / endometrial / ovarian cancer (654 unique proteins). Seventeen protein–cancer associations survived Benjamini–Hochberg false discovery rate correction (FDR &lt; 0.05). Candidate proteins were subsequently triangulated through colocalization (coloc.abf and coloc.SuSiE), gene-level GWAS enrichment (MAGMA), ER-subtype stratification, metabolic mediation analysis, immune tumour microenvironment profiling, and cross-platform pQTL sensitivity analysis (ARIC SomaScan, deCODE, OpenGWAS).</p>
       </div>
 
       <div class="row">
@@ -56,25 +56,18 @@
           <div class="card mb-4">
             <div class="card-header">Evidence tiers</div>
             <p>Proteins were classified into four evidence tiers based on the breadth of corroborating evidence:</p>
-            <table class="dataTable" style="width: 100%;">
-              <thead>
-                <tr>
-                  <th>Tier</th>
-                  <th>Criteria</th>
-                  <th>Proteins</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>T1</strong> — Highest confidence</td>
-                  <td>MR + dual colocalization (ABF and SuSiE PPH4 ≥ 0.80)</td>
-                  <td>EFNA1, TNFRSF6B, ATRAID, FGF5, ABO</td>
-                </tr>
-                <tr>
-                  <td><strong>T2a</strong> — High confidence</td>
-                  <td>MR + ABF-only colocalization (PPH4 ≥ 0.80)</td>
-                  <td>SNX15, PM20D1, UMOD</td>
-                </tr>
+            <table class="tier-table">
+          <tr><th>Evidence Tier</th><th>Definition</th><th>Candidate Proteins</th></tr>
+          <tr>
+            <td><strong>Tier 1</strong><br>(High confidence)</td>
+            <td>FDR-significant MR + strong colocalization by coloc.abf <em>or</em> coloc.susie.</td>
+            <td>EFNA1, TNFRSF6B, ATRAID, FGF5<br><em>Comparator:</em> ABO (Endometrial)</td>
+          </tr>
+          <tr>
+            <td><strong>Tier 2a</strong><br>(Moderate/Provisional)</td>
+            <td>FDR-significant MR + ABF-only colocalization (PPH4 &ge; 0.80) <em>or</em> MAGMA Bonferroni-significant gene-level support.</td>
+            <td>UMOD, SNX15, PM20D1</td>
+          </tr>      </tr>
                 <tr>
                   <td><strong>T2b</strong> — Moderate confidence</td>
                   <td>MR + partial colocalization support</td>
@@ -99,7 +92,7 @@
               <li><strong>Colocalization</strong> — PPH4 posterior probabilities from coloc.abf and coloc.SuSiE.</li>
               <li><strong>ER Subtypes</strong> — ER-positive vs ER-negative subtype stratification.</li>
               <li><strong>MAGMA</strong> — Gene-level GWAS enrichment confirming overlap.</li>
-              <li><strong>Replication</strong> — Independent validation using deCODE, ARIC, and OpenGWAS.</li>
+              <li><strong>Cross-platform pQTL sensitivity</strong> — Cross-platform pQTL sensitivity analyses using deCODE, ARIC, and OpenGWAS.</li>
               <li><strong>Immune</strong> — Tumour immune microenvironment correlations.</li>
               <li><strong>Evidence</strong> — Integrated multi-layer evidence table.</li>
               <li><strong>Druggability</strong> — Open Targets druggability assessment.</li>
@@ -120,7 +113,7 @@
         <table id="table-fdr" class="display"></table>
       </div>
       <div class="card">
-        <div class="card-header">All 701 proteins screened</div>
+        <div class="card-header">All cis-instrumentable proteins screened</div>
         <table id="table-full" class="display"></table>
       </div>
     </div>
@@ -201,24 +194,36 @@
       </div>
     </div>
 
-    <!-- 6. Replication -->
-    <div id="tab-replication" class="tab-pane">
-      <div class="alert" style="background-color: var(--bg-light); border-left: 4px solid var(--primary-color); padding: 15px; margin-bottom: 20px; border-radius: 4px;">
-        <strong>Replication:</strong> Independent validation of our primary findings using deCODE, ARIC SomaScan data, and OpenGWAS look-ups.
+    <!-- 6. Sensitivity -->
+    <div id="tab-sensitivity" class="tab-pane">
+      <div class="section-desc">
+        <strong>Cross-platform pQTL sensitivity:</strong> Cross-platform pQTL sensitivity analyses of our primary findings using deCODE, ARIC SomaScan data, and OpenGWAS look-ups.
       </div>
-      <div class="card">
-        <div class="card-header">deCODE Cohort Replication</div>
-        <img src="figures/decode_forest_plot.png" class="img-responsive">
+      <div class="card mb-4">
+        <div class="card-header">deCODE Cohort Sensitivity Analysis</div>
+        <div class="card-body img-container"><img src="figures/decode_forest_plot.png" alt="deCODE"></div>
       </div>
-      <div class="card">
-        <div class="card-header">ARIC Cohort Replication</div>
-        <img src="figures/fig7_aric_replication.png" class="img-responsive">
+      <div class="card mb-4">
+        <div class="card-header">ARIC Cohort Sensitivity Analysis</div>
+        <div class="card-body img-container"><img src="figures/fig7_aric_replication.png" alt="ARIC Replication"></div>
       </div>
-      <div class="card">
-        <div class="card-header">OpenGWAS Independent Replication</div>
-        <img src="figures/fig8_opengwas_replication.png" class="img-responsive">
+      <div class="card mb-4">
+        <div class="card-header">OpenGWAS Sensitivity Analysis</div>
+        <div class="card-body img-container"><img src="figures/fig8_opengwas_replication.png" alt="OpenGWAS Replication"></div>
+      </div>
+    </div>  <!-- 7. Further Sensitivity -->
+    <div id="tab-additional-sensitivity" class="tab-pane active" style="display: block;">
+      <div class="section-desc">
+        <strong>Additional Sensitivity Analyses:</strong>
+        <ul>
+          <li><strong>Protein-Altering Variant (PAV) Screen:</strong> Annotated the highest-tier instruments and their LD proxies (Supplementary Table 22).</li>
+          <li><strong>GTEx cis-eQTL Concordance:</strong> Evaluated cis-eQTL concordance in breast mammary tissue (Supplementary Table 23).</li>
+          <li><strong>Palindromic-Variant Sensitivity:</strong> coloc.abf robustness across all 17 loci is unaffected by exclusion of palindromic variants (largest &Delta;PPH4 = 0.046; Supplementary Table 24).</li>
+          <li><strong>LD-Stability Sweep (coloc.SuSiE):</strong> The primary analysis reproduces exactly, but across five LD specifications, TNFRSF6B is stable (0.885&ndash;0.909) whereas EFNA1 ranges 0.594&ndash;0.965 and ATRAID is bimodal (~0.997 or ~0.0005). Thus, EFNA1 and ATRAID are more provisional than coloc.abf-anchored Tier 1 proteins (Supplementary Table 25).</li>
+        </ul>
       </div>
     </div>
+  </div>
 
   </div>
 

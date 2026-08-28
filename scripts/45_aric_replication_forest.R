@@ -75,9 +75,9 @@ p <- ggplot(long, aes(x = OR, y = protein, colour = study, shape = study)) +
   labs(
     x       = "Odds ratio (95% CI) per SD increase in protein level",
     y       = NULL,
-    title   = "Independent replication of MR-prioritised breast cancer protein associations",
+    title   = "Cross-platform pQTL sensitivity of MR-prioritized protein-cancer associations",
     subtitle = paste0(
-      "4 proteins directionally replicated in ARIC EA SomaScan  ·  ",
+      "4 proteins directionally concordant in ARIC EA SomaScan (ABO is the endometrial comparator)  ·  ",
       "All discovery instruments cis-pQTLs (F > 30)"
     ),
     caption = "Significance: *** p<0.001, ** p<0.01, * p<0.05.  ARIC = Atherosclerosis Risk in Communities study."
@@ -96,7 +96,7 @@ p <- ggplot(long, aes(x = OR, y = protein, colour = study, shape = study)) +
   )
 
 ggsave(file.path(out_dir, "fig7_aric_replication.png"),
-       p, width = 9, height = 5.5, dpi = 300, bg = "white")
+       p, width = 9, height = 5.5, dpi = 600, bg = "white")
 ggsave(file.path(out_dir, "fig7_aric_replication.pdf"),
        p, width = 9, height = 5.5)
 

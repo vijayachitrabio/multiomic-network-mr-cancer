@@ -12,7 +12,7 @@
 
 This repository contains analysis code, summary outputs, and manuscript-supporting materials for a proteome-wide Mendelian randomization study integrating circulating protein genetics, cancer GWAS, metabolite colocalization, mediation MR, gene-level triangulation, and tumour-context annotation.
 
-Prior proteome-wide MR studies have established the value of plasma protein genetics for breast cancer target prioritization [4,5]. The present study extends that literature by moving beyond association-level discovery toward multi-layer evidence triangulation, integrating MR with fine-mapping-aware colocalization, MAGMA gene-level support, metabolite colocalization and mediation, cross-platform pQTL sensitivity analyses, and tumour-context annotation. This distinction is important because genetically proxied protein–cancer associations may arise from linkage disequilibrium, assay-specific pQTL architecture, or pleiotropic regional effects. The evidence hierarchy used here was therefore designed to separate protein candidates with stronger shared genetic support from secondary signals supported by gene-level, replication, metabolic, or tumour-context evidence alone.
+Prior proteome-wide MR studies have established the value of plasma protein genetics for breast cancer target prioritization [4,5]. The present study extends that literature by moving beyond association-level discovery toward multi-layer evidence triangulation, integrating MR with fine-mapping-aware colocalization, MAGMA gene-level support, metabolite colocalization and mediation, cross-platform pQTL sensitivity analyses, and tumour-context annotation. This distinction is important because genetically proxied protein–cancer associations may arise from linkage disequilibrium, assay-specific pQTL architecture, or pleiotropic regional effects. The evidence hierarchy used here was therefore designed to separate protein candidates with stronger shared genetic support from secondary signals supported by gene-level, cross-platform pQTL sensitivity, metabolic, or tumour-context evidence alone.
 
 The study prioritizes genetically supported circulating protein and metabolic pathways associated with breast cancer susceptibility, with endometrial and ovarian cancers included as hormone-related comparator outcomes.
 
@@ -23,14 +23,14 @@ The analysis combines:
 - MAGMA gene-level triangulation
 - metabolite–cancer colocalization
 - two-step protein → metabolite → breast cancer mediation MR
-- cross-platform pQTL/MR replication where instruments were available
+- cross-platform pQTL sensitivity analysis where instruments were available
 - tumour-context annotation using TCGA-BRCA, CPTAC-BRCA, TISCH single-cell RNA-seq, and Human Protein Atlas resources
 
 ---
 
 ## Key findings
 
-- 701 circulating proteins were screened using cis-pQTL instruments from the FinnGen R10 Olink panel.
+- We screened the 701 circulating proteins that met cis-instrument criteria out of the ~2,900 assayed on the FinnGen R10 Olink panel.
 - Seventeen protein–cancer associations survived false discovery rate correction: 16 for breast cancer and one for endometrial cancer.
 - Colocalization-supported breast cancer candidates included **EFNA1**, **TNFRSF6B**, **ATRAID**, and **FGF5**.
 - **UMOD** showed a provisional breast cancer signal supported by coloc.abf only.
@@ -39,7 +39,7 @@ The analysis combines:
 - Protein–metabolite–breast cancer mediation analyses highlighted pathways involving branched-chain amino acid and glycine-related metabolic traits.
 - Tumour-context analyses supported immune, stromal, and metabolic interpretations for selected prioritized proteins.
 - A methodological finding was that coloc.abf missed or misclassified colocalization at multi-signal loci such as **EFNA1** and **ATRAID**, whereas SuSiE-based colocalization resolved shared signals.
-- Independent cross-platform validation using the deCODE genetics platform replicated the primary breast cancer signals with consistent directionality.
+- Cross-platform pQTL sensitivity analyses using the deCODE genetics platform supported the primary breast cancer signals with consistent directionality.
 - Leave-one-locus-out sensitivity analyses of pleiotropic hubs (e.g., GCKR) demonstrated that the nominated metabolic mediation pathways are robust and not exclusively driven by single massive loci.
 
 <img width="800" alt="deCODE Validation Forest Plot" src="results/figures/decode_validation_forest_plot.png" />
@@ -58,7 +58,7 @@ The workflow includes:
 4. MAGMA gene-level triangulation.
 5. Metabolite–cancer colocalization across NMR metabolic traits.
 6. Two-step protein → metabolite → breast cancer mediation MR.
-7. Cross-platform replication using ARIC SomaScan and OpenGWAS INTERVAL where available.
+7. Cross-platform pQTL sensitivity analysis using ARIC SomaScan and OpenGWAS INTERVAL where available.
 8. Tumour-context annotation using TCGA, CPTAC, TISCH, and Human Protein Atlas resources.
 
 ---
@@ -83,3 +83,11 @@ The workflow includes:
 │   ├── scrna/                  # TISCH single-cell RNA-seq annotation
 │   ├── bidirectional/          # Reverse-direction MR sensitivity analysis
 │   └── mvmr/                   # MVMR feasibility assessment
+
+---
+
+## Reproducibility notes
+- **FDR denominator fix:** Benjamini-Hochberg FDR was applied once per protein per outcome to the primary estimates (IVW/Wald ratio), not across all MR estimators, avoiding an inflated hypothesis count.
+- **MAGMA p-value correction:** The MAGMA gene-level p-value for KLB was corrected to 0.0010913 (previously mapped incorrectly to the unrelated RIMKLB gene on chr12).
+- **Bidirectional MR matching:** Exact GRCh38 base-pair matching (tolerance 0 bp) was used for bidirectional MR, correcting an earlier assumption of a ±200 bp liftover tolerance.
+- **Software stack:** The primary analysis utilized R 4.3.2 / TwoSampleMR 0.5.7 / coloc 5.2.3 / susieR 0.14.2. The bidirectional rerun utilized R 4.5.2 / TwoSampleMR 0.7.9.

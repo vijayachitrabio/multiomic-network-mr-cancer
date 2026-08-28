@@ -83,10 +83,10 @@ p <- ggplot(long, aes(x=OR, y=y_label, colour=study, shape=study)) +
   labs(
     x       = "Odds ratio (95% CI) per SD increase in protein level",
     y       = NULL,
-    title   = "Cross-platform replication: FinnGen Olink → OpenGWAS SomaScan",
+    title   = "Cross-platform pQTL sensitivity: FinnGen Olink → OpenGWAS SomaScan",
     subtitle= paste0(
       nrow(combined), " protein–cancer pairs  ·  ",
-      sum(combined$dir_conc & combined$pval_rep < 0.05), " directionally replicated (p<0.05)"
+      sum(combined$dir_conc & combined$pval_rep < 0.05), " directionally concordant (p<0.05)"
     ),
     caption = "Significance: *** p<0.001, ** p<0.01, * p<0.05.\nOpenGWAS instruments from Sun et al. 2018 SomaScan (INTERVAL study, N≈3,301)."
   ) +
@@ -104,7 +104,7 @@ p <- ggplot(long, aes(x=OR, y=y_label, colour=study, shape=study)) +
   )
 
 ggsave(file.path(out_dir, "fig8_opengwas_replication.png"),
-       p, width=9, height=max(4, 1.2*nrow(combined)+2), dpi=300, bg="white")
+       p, width=9, height=max(4, 1.2*nrow(combined)+2), dpi=600, bg="white")
 ggsave(file.path(out_dir, "fig8_opengwas_replication.pdf"),
        p, width=9, height=max(4, 1.2*nrow(combined)+2))
 message("✓ fig8_opengwas_replication.png/.pdf saved")

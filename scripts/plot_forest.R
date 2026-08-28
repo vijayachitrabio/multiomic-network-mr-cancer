@@ -145,7 +145,7 @@ p <- ggplot(plot_df, aes(y = display_name)) +
   scale_color_manual(values = status_cols, drop = FALSE) +
   scale_shape_manual(values = status_shapes, drop = FALSE) +
   labs(
-    title = "deCODE pQTL Validation of Manuscript Instruments",
+    title = "deCODE cross-platform pQTL sensitivity analysis of manuscript instruments",
     subtitle = "Bars show −log10(P); colors indicate concordance. OR magnitudes omitted because deCODE protein scales differ by assay.",
     x = expression(-log[10](italic(P))),
     y = NULL,
@@ -171,7 +171,7 @@ p <- ggplot(plot_df, aes(y = display_name)) +
 
 png_file <- file.path(out_dir, "decode_forest_plot.png")
 pdf_file <- file.path(out_dir, "decode_forest_plot.pdf")
-ggsave(png_file, plot = p, width = 10.5, height = 6.8, dpi = 320, bg = "white")
+ggsave(png_file, plot = p, width = 10.5, height = 6.8, dpi = 600, bg = "white")
 ggsave(pdf_file, plot = p, width = 10.5, height = 6.8, bg = "white")
 
 cat("Saved improved deCODE validation plot:\n")
