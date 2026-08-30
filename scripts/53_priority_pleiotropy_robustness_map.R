@@ -76,7 +76,11 @@ for (p in priority) {
   m <- master[master$Protein == p, , drop = FALSE]
   nsnp <- instrument_count(p)
   or <- if (nrow(m)) extract_or(m$`MR OR (95% CI)`[1]) else NA_real_
-  tier <- if (nrow(m)) m$Tier[1] else NA_character_
+  ## "‡" (U+2021) renders fine in Word/Excel but breaks into a literal "..."
+  ## in this machine's R/ggplot2 PNG graphics device (same issue previously
+  ## fixed for −/→/≈/≥/× -- see scripts 45/48/87/88/plot_forest.R). Use ASCII
+  ## "*" for figure text only; the source CSV/xlsx keep the real ‡ glyph.
+  tier <- if (nrow(m)) gsub("‡", "*", m$Tier[1]) else NA_character_
 
   if (is.na(nsnp)) {
     add_cell(p, domains[1], "No\nMR", "missing")
@@ -118,8 +122,23 @@ for (p in priority) {
     pph4 <- clean_text(m$`Coloc PPH4`[1])
     pph4_num <- suppressWarnings(as.numeric(sub(" .*", "", pph4)))
     if (grepl("STRONG", verdict, ignore.case = TRUE)) {
-      lab <- if (!is.na(pph4_num)) sprintf("Strong\nPPH4 %.2f", pph4_num) else "Strong"
-      cls <- "strong"
+      ## EFNA1/ATRAID are SuSiE-only Tier 1 (T1*): this PPH4 is the primary
+      ## specification only and is LD-sensitive (Supplementary Table 25).
+      ## Give them the "partial" (suggestive) fill instead of solid "strong"
+      ## green so this figure doesn't visually contradict Table 1/S7 -- ATRAID
+      ## in particular ranges 0.0005-0.997 across LD specifications and must
+      ## not read as unequivocally robust. ASCII "*" used instead of "‡" --
+      ## see tier-sanitizing note above.
+      if (p %in% c("EFNA1", "ATRAID")) {
+        ## Short per-line text: geom_text does not auto-wrap on \n-joined
+        ## strings, so each line must fit the tile width on its own.
+        ld_note <- if (p == "ATRAID") "Strongly\nLD-sensitive" else "LD-sensitive"
+        lab <- if (!is.na(pph4_num)) sprintf("PPH4 %.3f*\n%s", pph4_num, ld_note) else paste0("Primary*\n", ld_note)
+        cls <- "partial"
+      } else {
+        lab <- if (!is.na(pph4_num)) sprintf("Strong\nPPH4 %.2f", pph4_num) else "Strong"
+        cls <- "strong"
+      }
     } else if (grepl("MODERATE", verdict, ignore.case = TRUE)) {
       lab <- if (!is.na(pph4_num)) sprintf("Moderate\nPPH4 %.2f", pph4_num) else "Moderate"
       cls <- "partial"
@@ -147,7 +166,10 @@ for (p in priority) {
   if (ogw_sig) {
     best <- ogw_p[ogw_p$outcome == "Breast" &
       ogw_p$method %in% c("Inverse variance weighted", "Wald ratio"), , drop = FALSE][1, ]
-    add_cell(p, domains[5], sprintf("Replicated\nOR %.3f", best$or), "strong")
+    ## Same BCAC breast-cancer GWAS reused as the discovery outcome, so this is
+    ## cross-platform (different pQTL source) concordance, not independent
+    ## outcome replication -- match the manuscript's own established wording.
+    add_cell(p, domains[5], sprintf("Cross-platform\nOR %.3f", best$or), "strong")
   } else if (ogw_tested) {
     add_cell(p, domains[5], "Tested\nNS", "partial")
   } else if (has_ogw_instrument(p)) {
@@ -218,7 +240,7 @@ p <- ggplot(cells, aes(x = domain, y = protein, fill = class)) +
     subtitle = "Most discovery instruments are single-SNP cis-pQTLs; formal MR-Egger pleiotropy testing is therefore limited",
     x = NULL,
     y = NULL,
-    caption = "Coloc helps distinguish shared causal signal from linkage. Steiger supports protein-to-cancer directionality for the priority breast cancer hits."
+    caption = "Coloc helps distinguish shared causal signal from linkage. Steiger supports protein-to-cancer directionality for the priority breast cancer hits.\n* SuSiE-only Tier 1; shared-signal support was reproducible under the primary specification but sensitive to linkage-disequilibrium specification (Supplementary Table 25)."
   ) +
   theme_minimal(base_size = 12) +
   theme(
@@ -234,7 +256,7 @@ p <- ggplot(cells, aes(x = domain, y = protein, fill = class)) +
     plot.margin = margin(14, 18, 12, 14)
   )
 
-ggsave(file.path(out_fig, "fig14_priority_pleiotropy_robustness_map.png"), p, width = 12.8, height = 5.7, dpi = 320, bg = "white")
+ggsave(file.path(out_fig, "fig14_priority_pleiotropy_robustness_map.png"), p, width = 12.8, height = 5.7, dpi = 600, bg = "white")
 ggsave(file.path(out_fig, "fig14_priority_pleiotropy_robustness_map.pdf"), p, width = 12.8, height = 5.7, bg = "white")
 write.csv(cells, file.path(out_tab, "priority_pleiotropy_robustness_map_cells.csv"), row.names = FALSE)
 write.csv(summary_rows, file.path(out_tab, "priority_pleiotropy_summary.csv"), row.names = FALSE)

@@ -15,21 +15,25 @@
 ## Proteins covered: those on chr 1,2,3,11,16,19,20 (1kG VCF available)
 ## Output: results/bidirectional/bidirectional_v2_*.csv
 ##
-## PROVENANCE OF ARCHIVED RESULTS (read before citing results/bidirectional/):
-##   The files currently in results/bidirectional/ were generated with the
-##   earlier POS_TOL_BP = 200L setting, i.e. BEFORE the tolerance was corrected
-##   to 0 above. Because both datasets are GRCh38, tightening the tolerance can
-##   only ever REMOVE a match (a variant matched at 1-200 bp offset with
-##   concordant alleles), never add one. The archived result is 7 proteins with
-##   estimable reverse effects and 5 with no genome-wide significant breast
-##   variant in the cis window, of which only ITIH3 reached nominal
-##   significance - i.e. the reported "sparse, no consistent evidence"
-##   conclusion cannot be strengthened by the tolerance change, only left
-##   unchanged or made more sparse.
-##   Rerunning is nonetheless advisable so script and output agree. It requires
-##   TwoSampleMR, Rsamtools and GenomicRanges plus network access to the FinnGen
-##   public tabix endpoint; none of these were available in the environment
-##   where the tolerance fix was made.
+## RERUN 2026-08-28 — results in results/bidirectional/ are now current.
+##   The earlier POS_TOL_BP = 200L output has been superseded. An earlier version
+##   of this note claimed that tightening the tolerance could only REMOVE matches,
+##   never change an estimate. That was WRONG and is recorded here so it is not
+##   repeated: with a tolerance window, hits[1] could select a NEIGHBOURING variant
+##   that happened to share the same normalised allele pair, substituting the wrong
+##   instrument entirely. Five of seven estimable proteins changed materially on
+##   rerun (ATRAID -123 bp, CGREF1 -123 bp, ITIH3 -15 bp, PM20D1 -132 bp, UMOD
+##   -1 bp were all matching the wrong variant). The pre-fix estimates were also
+##   implausible on their face (PM20D1 OR 1.6e-9, UMOD OR 5.9e8); the corrected
+##   estimates are of normal magnitude.
+##   Corrected result: 7 estimable, 5 with no genome-wide significant breast
+##   variant in the cis window. Nominal reverse signals at ATRAID (p = 0.0032) and
+##   CGREF1 (p = 0.0476) both derive from the SAME single variant — both genes sit
+##   on chr2p23.3 with the pleiotropic GCKR locus inside their cis windows — so
+##   they are one locus, not two findings. No multi-instrument protein shows a
+##   concordant reverse effect. The manuscript reports this explicitly.
+##   Lesson: never use a positional tolerance to bridge a suspected build
+##   mismatch. Verify the build, then match exactly.
 
 suppressPackageStartupMessages({
   library(data.table); library(TwoSampleMR)

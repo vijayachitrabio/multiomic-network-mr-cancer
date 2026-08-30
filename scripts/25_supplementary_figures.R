@@ -36,7 +36,11 @@ cat("SFig 1: Breast cancer volcano\n")
 
 phase2 <- fread(file.path(project_dir, "results", "phase2_protein_cancer",
                            "protein_cancer_mr_results_full.csv"))
-breast_all <- phase2[grepl("Breast", outcome)]
+## Plot the PRIMARY estimate per protein only (Wald ratio for single-SNP instruments,
+## IVW for multi-SNP instruments). The raw file also carries weighted-median and
+## MR-Egger sensitivity rows for multi-SNP proteins; including them here would plot
+## the same protein 2-3 times and inflate the apparent screen size.
+breast_all <- phase2[grepl("Breast", outcome) & is_primary_estimate == TRUE]
 breast_all[, log10p := -log10(pval)]
 breast_all[, hit := exposure %in% hit_proteins]
 breast_all[, direction := fifelse(b > 0, "Risk (OR>1)", "Protective (OR<1)")]
@@ -56,8 +60,8 @@ sfig1 <- ggplot(breast_all, aes(x = b, y = log10p, colour = hit, alpha = hit)) +
            y = -log10(fdr_thresh) + 0.8,
            label = "FDR < 0.05", size = 3, colour = "firebrick") +
   labs(
-    title    = "Protein-breast cancer MR screen (701 proteins)",
-    subtitle = sprintf("FinnGen R10 Olink pQTLs; %d proteins tested; %d FDR < 0.05",
+    title    = "Protein-breast cancer MR screen",
+    subtitle = sprintf("FinnGen R10 Olink cis-pQTLs; %d harmonized proteins tested (701 cis-instrumentable); %d FDR < 0.05",
                        nrow(breast_all), sum(breast_all$hit)),
     x        = "MR beta (per SD protein increase on log-OR scale)",
     y        = expression(-log[10](p))
@@ -66,6 +70,10 @@ sfig1 <- ggplot(breast_all, aes(x = b, y = log10p, colour = hit, alpha = hit)) +
   theme(plot.title = element_text(face = "bold", size = 12))
 
 save_fig(sfig1, "sfig1_breast_volcano", w = 9, h = 6.5)
+## shipped at 600 dpi (matching the other main/supplementary figures); save_fig()
+## defaults to 300 for the .png, so override that copy explicitly
+ggsave(file.path(fig_dir, "sfig1_breast_volcano.png"), sfig1, width = 9, height = 6.5,
+       dpi = 600, bg = "white")
 
 # ============================================================
 # SFig 2 — Per-SNP Wald Ratio: 2-SNP proteins (KLB, PM20D1, IL34, ABO)

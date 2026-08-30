@@ -57,7 +57,12 @@ short_feature <- function(x) {
   x
 }
 
-protein_tier <- setNames(master$Tier, master$Protein)
+## The "‡" (U+2021) marker renders fine in Word/Excel but breaks into a
+## literal "..." in this machine's R/ggplot2 PNG graphics device (the same
+## systemic issue previously fixed for −/→/≈/≥/× -- see scripts 45/48/87/
+## 88/plot_forest.R). Swap it for a plain ASCII "*" for figure text only;
+## the source CSV/xlsx keep the real ‡ glyph.
+protein_tier <- setNames(gsub("‡", "*", master$Tier), master$Protein)
 row_labels <- paste0(priority, " (", protein_tier[priority], ")")
 row_labels[is.na(protein_tier[priority])] <- priority[is.na(protein_tier[priority])]
 protein_label <- setNames(row_labels, priority)
@@ -101,8 +106,23 @@ for (p in priority) {
     pph4 <- clean_text(m$`Coloc PPH4`[1])
     pph4_num <- suppressWarnings(as.numeric(sub(" .*", "", pph4)))
     if (grepl("STRONG", verdict, ignore.case = TRUE)) {
-      lab <- if (!is.na(pph4_num)) sprintf("Strong\nPPH4 %.2f", pph4_num) else "Strong"
-      cls <- "strong"
+      ## EFNA1/ATRAID are SuSiE-only Tier 1 (T1*): this PPH4 is the primary
+      ## specification only and is LD-sensitive (Supplementary Table 25).
+      ## Give them the "partial" (suggestive) fill instead of solid "strong"
+      ## green so this figure doesn't visually contradict Table 1/S7 -- ATRAID
+      ## in particular ranges 0.0005-0.997 across LD specifications and must
+      ## not read as unequivocally robust. ASCII "*" used instead of "‡" --
+      ## see protein_tier note above.
+      if (p %in% c("EFNA1", "ATRAID")) {
+        ## Short per-line text: geom_text does not auto-wrap on \n-joined
+        ## strings, so each line must fit the tile width on its own.
+        ld_note <- if (p == "ATRAID") "Strongly\nLD-sensitive" else "LD-sensitive"
+        lab <- if (!is.na(pph4_num)) sprintf("PPH4 %.3f*\n%s", pph4_num, ld_note) else paste0("Primary*\n", ld_note)
+        cls <- "partial"
+      } else {
+        lab <- if (!is.na(pph4_num)) sprintf("Strong\nPPH4 %.2f", pph4_num) else "Strong"
+        cls <- "strong"
+      }
     } else if (grepl("MODERATE", verdict, ignore.case = TRUE)) {
       lab <- if (!is.na(pph4_num)) sprintf("Moderate\nPPH4 %.2f", pph4_num) else "Moderate"
       cls <- "moderate"
@@ -136,7 +156,10 @@ for (p in priority) {
     (p == "IL34" && grepl("Interleukin-34", exposure_text, ignore.case = TRUE)) ||
     (p == "FGF5" && grepl("Fibroblast growth factor 5", exposure_text, ignore.case = TRUE))
   if (breast_sig) {
-    add_cell(p, domains[3], "Replicated\nBRCA", "strong")
+    ## Same BCAC breast-cancer GWAS reused as the discovery outcome, so this is
+    ## cross-platform (different pQTL source) concordance, not independent
+    ## outcome replication -- match the manuscript's own established wording.
+    add_cell(p, domains[3], "Cross-platform\nBRCA", "strong")
   } else if (breast_tested) {
     add_cell(p, domains[3], "Tested\nNS", "partial")
   } else if (inst_found) {
@@ -245,7 +268,7 @@ p <- ggplot(panel, aes(x = domain, y = protein, fill = class)) +
     subtitle = "Compact summary of genetic, tumour, proteomic, immune, single-cell and mediation evidence",
     x = NULL,
     y = NULL,
-    caption = "NS: not significant. BRCA: breast cancer. Only the strongest immune association per dataset is shown."
+    caption = "NS: not significant. BRCA: breast cancer. Only the strongest immune association per dataset is shown.\n* SuSiE-only Tier 1; shared-signal support was reproducible under the primary specification but sensitive to linkage-disequilibrium specification (Supplementary Table 25)."
   ) +
   theme_minimal(base_size = 12) +
   theme(
@@ -258,7 +281,7 @@ p <- ggplot(panel, aes(x = domain, y = protein, fill = class)) +
     plot.margin = margin(14, 18, 12, 14)
   )
 
-ggsave(file.path(out_fig, "fig13_integrated_evidence_map.png"), p, width = 12.5, height = 5.8, dpi = 320, bg = "white")
+ggsave(file.path(out_fig, "fig13_integrated_evidence_map.png"), p, width = 12.5, height = 5.8, dpi = 600, bg = "white")
 ggsave(file.path(out_fig, "fig13_integrated_evidence_map.pdf"), p, width = 12.5, height = 5.8, bg = "white")
 write.csv(panel, file.path(out_tab, "integrated_evidence_map_cells.csv"), row.names = FALSE)
 

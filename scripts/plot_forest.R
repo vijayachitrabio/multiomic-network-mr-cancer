@@ -68,9 +68,9 @@ res <- res %>%
     ),
     direction_symbol = case_when(
       is.na(b) ~ "NA",
-      b > 0 ~ "↑",
-      b < 0 ~ "↓",
-      TRUE ~ "–"
+      b > 0 ~ "^",
+      b < 0 ~ "v",
+      TRUE ~ "-"
     ),
     method_label = case_when(
       protein == "INHBB_Activin_B" ~ "secondary assay",
@@ -139,14 +139,14 @@ p <- ggplot(plot_df, aes(y = display_name)) +
   scale_x_continuous(
     limits = c(0, 22),
     breaks = c(0, 1.3, 3, 6, 9, 12, 14),
-    labels = c("0", "1.3", "3", "6", "9", "12", "≥14"),
+    labels = c("0", "1.3", "3", "6", "9", "12", ">=14"),
     expand = expansion(mult = c(0, 0))
   ) +
   scale_color_manual(values = status_cols, drop = FALSE) +
   scale_shape_manual(values = status_shapes, drop = FALSE) +
   labs(
     title = "deCODE cross-platform pQTL sensitivity analysis of manuscript instruments",
-    subtitle = "Bars show −log10(P); colors indicate concordance. OR magnitudes omitted because deCODE protein scales differ by assay.",
+    subtitle = "Bars show -log10(P); colors indicate concordance. OR magnitudes omitted because deCODE protein scales differ by assay.",
     x = expression(-log[10](italic(P))),
     y = NULL,
     color = NULL,

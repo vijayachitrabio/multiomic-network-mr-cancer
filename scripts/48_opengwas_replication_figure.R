@@ -54,11 +54,11 @@ long <- bind_rows(
                          study="Discovery\n(FinnGen Olink, N=619)"),
   combined |> transmute(protein=protein_label, cancer_short, dir_conc,
                          OR=or_rep,  LCI=lci_rep,  UCI=uci_rep,  pval=pval_rep,
-                         study="Replication\n(OpenGWAS SomaScan)")
+                         study="Cross-platform pQTL sensitivity\n(OpenGWAS SomaScan)")
 ) |>
   mutate(
     study   = factor(study, levels=c("Discovery\n(FinnGen Olink, N=619)",
-                                     "Replication\n(OpenGWAS SomaScan)")),
+                                     "Cross-platform pQTL sensitivity\n(OpenGWAS SomaScan)")),
     sig_lab = case_when(pval < 0.001 ~ "***", pval < 0.01 ~ "**", pval < 0.05 ~ "*", TRUE ~ ""),
     y_label = if_else(cancer_short=="Breast", protein,
                       paste0(protein, "\n[", cancer_short, "]"))
@@ -67,7 +67,7 @@ long <- bind_rows(
 col_disc <- "#2471A3"
 col_rep  <- "#7D3C98"
 study_colours <- c("Discovery\n(FinnGen Olink, N=619)" = col_disc,
-                   "Replication\n(OpenGWAS SomaScan)"  = col_rep)
+                   "Cross-platform pQTL sensitivity\n(OpenGWAS SomaScan)"  = col_rep)
 
 p <- ggplot(long, aes(x=OR, y=y_label, colour=study, shape=study)) +
   facet_wrap(~study, ncol=2, scales="free_x") +
@@ -78,17 +78,17 @@ p <- ggplot(long, aes(x=OR, y=y_label, colour=study, shape=study)) +
             hjust=0, size=4.5, show.legend=FALSE, colour="grey20") +
   scale_colour_manual(values=study_colours, name=NULL) +
   scale_shape_manual(values=c("Discovery\n(FinnGen Olink, N=619)"=16,
-                               "Replication\n(OpenGWAS SomaScan)"=17), name=NULL) +
+                               "Cross-platform pQTL sensitivity\n(OpenGWAS SomaScan)"=17), name=NULL) +
   scale_x_continuous(labels=function(x) sprintf("%.3f", x)) +
   labs(
     x       = "Odds ratio (95% CI) per SD increase in protein level",
     y       = NULL,
-    title   = "Cross-platform pQTL sensitivity: FinnGen Olink → OpenGWAS SomaScan",
+    title   = "Cross-platform pQTL sensitivity: FinnGen Olink -> OpenGWAS SomaScan",
     subtitle= paste0(
-      nrow(combined), " protein–cancer pairs  ·  ",
-      sum(combined$dir_conc & combined$pval_rep < 0.05), " directionally concordant (p<0.05)"
+      nrow(combined), " protein-cancer pairs.\n",
+      sum(combined$dir_conc & combined$pval_rep < 0.05), " directionally concordant (p<0.05)."
     ),
-    caption = "Significance: *** p<0.001, ** p<0.01, * p<0.05.\nOpenGWAS instruments from Sun et al. 2018 SomaScan (INTERVAL study, N≈3,301)."
+    caption = "Significance: *** p<0.001, ** p<0.01, * p<0.05.\nOpenGWAS instruments from Sun et al. 2018 SomaScan (INTERVAL study, N~3,301)."
   ) +
   theme_bw(base_size=13) +
   theme(

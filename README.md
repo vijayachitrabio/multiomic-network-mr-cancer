@@ -32,7 +32,7 @@ The analysis combines:
 
 - We screened the 701 circulating proteins that met cis-instrument criteria out of the ~2,900 assayed on the FinnGen R10 Olink panel.
 - Seventeen protein–cancer associations survived false discovery rate correction: 16 for breast cancer and one for endometrial cancer.
-- Colocalization-supported breast cancer candidates included **EFNA1**, **TNFRSF6B**, **ATRAID**, and **FGF5**.
+- Colocalization-supported breast cancer candidates included **FGF5** and **TNFRSF6B**; **EFNA1** and **ATRAID** met the primary SuSiE colocalization threshold but were sensitive to linkage-disequilibrium specification (T1‡).
 - **UMOD** showed a provisional breast cancer signal supported by coloc.abf only.
 - **ABO** represented a distinct endometrial cancer comparator signal.
 - **SNX15** and **PM20D1** were supported by MR and Bonferroni-significant MAGMA gene-level evidence but were not classified as colocalized protein–cancer signals.

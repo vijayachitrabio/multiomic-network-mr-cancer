@@ -47,11 +47,11 @@ long <- bind_rows(
   combined |> transmute(protein, cancer_short, OR = or_disc,  LCI = lci_disc,  UCI = uci_disc,
                          pval = pval_disc, study = "Discovery\n(FinnGen Olink, N=619)", dir_conc),
   combined |> transmute(protein, cancer_short, OR = or_aric,  LCI = lci_aric,  UCI = uci_aric,
-                         pval = pval_aric, study = "Replication\n(ARIC SomaScan, N≈7,000)", dir_conc)
+                         pval = pval_aric, study = "Cross-platform pQTL sensitivity\n(ARIC SomaScan, N~7,000)", dir_conc)
 ) |>
   mutate(
     study   = factor(study, levels = c("Discovery\n(FinnGen Olink, N=619)",
-                                       "Replication\n(ARIC SomaScan, N≈7,000)")),
+                                       "Cross-platform pQTL sensitivity\n(ARIC SomaScan, N~7,000)")),
     sig_lab = case_when(pval < 0.001 ~ "***", pval < 0.01 ~ "**", pval < 0.05 ~ "*", TRUE ~ ""),
     cancer_label = if_else(cancer_short == "Breast", "", paste0(" [", cancer_short, "]"))
   )
@@ -59,7 +59,7 @@ long <- bind_rows(
 col_disc  <- "#2471A3"
 col_aric  <- "#1E8449"
 study_colours <- c("Discovery\n(FinnGen Olink, N=619)"       = col_disc,
-                   "Replication\n(ARIC SomaScan, N≈7,000)" = col_aric)
+                   "Cross-platform pQTL sensitivity\n(ARIC SomaScan, N~7,000)" = col_aric)
 
 p <- ggplot(long, aes(x = OR, y = protein, colour = study, shape = study)) +
   facet_wrap(~ study, ncol = 2, scales = "free_x") +
@@ -70,16 +70,12 @@ p <- ggplot(long, aes(x = OR, y = protein, colour = study, shape = study)) +
             hjust = 0, size = 4.5, show.legend = FALSE, colour = "grey20") +
   scale_colour_manual(values = study_colours, name = NULL) +
   scale_shape_manual(values = c("Discovery\n(FinnGen Olink, N=619)" = 16,
-                                "Replication\n(ARIC SomaScan, N≈7,000)" = 17), name = NULL) +
+                                "Cross-platform pQTL sensitivity\n(ARIC SomaScan, N~7,000)" = 17), name = NULL) +
   scale_x_continuous(labels = function(x) sprintf("%.3f", x)) +
   labs(
     x       = "Odds ratio (95% CI) per SD increase in protein level",
     y       = NULL,
     title   = "Cross-platform pQTL sensitivity of MR-prioritized protein-cancer associations",
-    subtitle = paste0(
-      "4 proteins directionally concordant in ARIC EA SomaScan (ABO is the endometrial comparator)  ·  ",
-      "All discovery instruments cis-pQTLs (F > 30)"
-    ),
     caption = "Significance: *** p<0.001, ** p<0.01, * p<0.05.  ARIC = Atherosclerosis Risk in Communities study."
   ) +
   theme_bw(base_size = 13) +
