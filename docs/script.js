@@ -49,7 +49,7 @@ function loadTable(csvUrl, tableId) {
       
       const columns = Object.keys(results.data[0]).map(key => ({
         title: key,
-        data: key,
+        data: function(row, type, set, meta) { return row[key]; },
         defaultContent: ""
       }));
       
