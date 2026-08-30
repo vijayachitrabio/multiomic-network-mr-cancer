@@ -47,14 +47,23 @@ function loadTable(csvUrl, tableId) {
     complete: function(results) {
       if (results.data.length === 0) return;
       
+      // Sanitize keys to completely avoid DataTables dot-notation bugs
+      const sanitizedData = results.data.map(row => {
+        let newRow = {};
+        for (let k in row) {
+          newRow[k.replace(/\./g, '_')] = row[k];
+        }
+        return newRow;
+      });
+      
       const columns = Object.keys(results.data[0]).map(key => ({
         title: key,
-        data: key.replace(/\./g, '\\\\.'),
+        data: key.replace(/\./g, '_'),
         defaultContent: ""
       }));
       
       $(`#${tableId}`).DataTable({
-        data: results.data,
+        data: sanitizedData,
         columns: columns,
         pageLength: 10,
         scrollX: true,
