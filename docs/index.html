@@ -179,19 +179,13 @@
       <div class="alert" style="background-color: var(--bg-light); border-left: 4px solid var(--primary-color); padding: 15px; margin-bottom: 20px; border-radius: 4px;">
         <strong>Mediation:</strong> Metabolic mediation analysis identifying potential indirect pathways where circulating proteins influence breast cancer risk via circulating metabolites.
       </div>
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header">Mediation paths: protein → metabolite → cancer</div>
-            <img src="figures/fig4_mediation_paths.png" class="img-responsive">
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header">Mediation evidence table</div>
-            <table id="table-mediation" class="display"></table>
-          </div>
-        </div>
+      <div class="card mb-4">
+        <div class="card-header">Mediation paths: protein → metabolite → cancer</div>
+        <img src="figures/fig4_mediation_paths.png" class="img-responsive" style="max-height: 500px; width: auto;">
+      </div>
+      <div class="card mb-4">
+        <div class="card-header">Mediation evidence table</div>
+        <table id="table-mediation" class="display"></table>
       </div>
     </div>
 
@@ -230,6 +224,6 @@
     <img id="lightbox-img" class="lightbox-img" src="">
   </div>
 
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>
