@@ -96,7 +96,7 @@
               <li><strong>Immune</strong> — Tumour immune microenvironment correlations.</li>
               <li><strong>Evidence</strong> — Integrated multi-layer evidence table.</li>
               <li><strong>Druggability</strong> — Open Targets druggability assessment.</li>
-              <li><strong>Mediation</strong> — Metabolic mediation analysis identifying indirect pathways.</li>
+              <li><strong>Mediation</strong> — Exploratory protein &rarr; metabolite &rarr; cancer mediation MR (hypothesis-generating).</li>
             </ul>
           </div>
         </div>
@@ -177,7 +177,7 @@
     <!-- 5. Mediation -->
     <div id="tab-mediation" class="tab-pane">
       <div class="alert" style="background-color: var(--bg-light); border-left: 4px solid var(--primary-color); padding: 15px; margin-bottom: 20px; border-radius: 4px;">
-        <strong>Mediation:</strong> Metabolic mediation analysis identifying potential indirect pathways where circulating proteins influence breast cancer risk via circulating metabolites.
+        <strong>Mediation:</strong> Exploratory two-step mediation MR of protein &rarr; metabolite &rarr; breast cancer paths, using the weighted-median estimator for the metabolite-to-cancer step (manuscript Table 2; Supplementary Table 9). These results are hypothesis-generating pathway nominations: no path showed complete three-leg colocalization, multivariable MR was infeasible, and the ATRAID &rarr; TG_by_PG path is not supported (p = 0.627).
       </div>
       <div class="card mb-4">
         <div class="card-header">Mediation paths: protein → metabolite → cancer</div>
@@ -213,6 +213,7 @@
           <li><strong>GTEx cis-eQTL Concordance:</strong> Evaluated cis-eQTL concordance in breast mammary tissue (Supplementary Table 23).</li>
           <li><strong>Palindromic-Variant Sensitivity:</strong> coloc.abf robustness across all 17 loci is unaffected by exclusion of palindromic variants (largest &Delta;PPH4 = 0.046; Supplementary Table 24).</li>
           <li><strong>LD-Stability Sweep (coloc.SuSiE):</strong> The primary analysis reproduces exactly, but across six LD specifications &mdash; including one restricted to unrelated European-ancestry founders, to test whether related individuals in the reference panel drive the instability &mdash; TNFRSF6B is stable (0.883&ndash;0.909) whereas EFNA1 ranges 0.594&ndash;0.965 and ATRAID is bimodal (~0.997 or ~0.0005). Restricting to unrelated founders left all three estimates essentially unchanged, so related individuals are not the driver. EFNA1 and ATRAID are therefore more provisional than coloc.abf-anchored Tier 1 proteins (Supplementary Table 25).</li>
+          <li><strong>Finnish LD Reference (coloc.SuSiE):</strong> Rebuilding LD from the 99 Finnish individuals in the 1000 Genomes panel gave PPH4 = 0.970 for EFNA1 but negligible values for ATRAID (0.0005) and TNFRSF6B (0.0003). Random sets of 99 non-Finnish Europeans were similarly unstable (EFNA1 0.56&ndash;0.90; ATRAID 0.0009&ndash;1.00; TNFRSF6B 0.0009&ndash;0.90), so a panel this small cannot separate an ancestry effect from sampling instability. The analysis neither confirms nor refutes the primary SuSiE assignments; coloc.abf-anchored findings, including TNFRSF6B (PPH4 = 0.888), do not depend on any LD reference (Supplementary Table 26).</li>
         </ul>
       </div>
     </div>
