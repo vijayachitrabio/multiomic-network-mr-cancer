@@ -1,39 +1,16 @@
 #!/usr/bin/env Rscript
-## Script 48 v3: Bidirectional MR (breast cancer liability → protein level)
-## Strategy: for each protein, fetch FinnGen pQTL cis data and breast GWAS GWS
-##   data, then match on position + allele concordance.
-##
-## GENOME BUILD: both sides are GRCh38. The BCAC file used here is the GWAS
-##   Catalog *harmonised* release (Breast_GCST90018757.h.tsv.gz), in which
-##   `base_pair_location` is already lifted to GRCh38 (hm_coordinate_conversion
-##   column present). Verified empirically: GRCh38 cis-pQTL instrument positions
-##   match `base_pair_location` exactly (e.g. 1:1023525 AGRN rs2710890).
-##   An earlier version of this header incorrectly described the GWAS side as
-##   hg19 and justified a ±200 bp tolerance as liftover slack. That was wrong:
-##   no cross-build tolerance is required, so matching is now exact (tolerance 0).
-##
-## Proteins covered: those on chr 1,2,3,11,16,19,20 (1kG VCF available)
-## Output: results/bidirectional/bidirectional_v2_*.csv
-##
-## RERUN 2026-08-28 — results in results/bidirectional/ are now current.
-##   The earlier POS_TOL_BP = 200L output has been superseded. An earlier version
-##   of this note claimed that tightening the tolerance could only REMOVE matches,
-##   never change an estimate. That was WRONG and is recorded here so it is not
-##   repeated: with a tolerance window, hits[1] could select a NEIGHBOURING variant
-##   that happened to share the same normalised allele pair, substituting the wrong
-##   instrument entirely. Five of seven estimable proteins changed materially on
-##   rerun (ATRAID -123 bp, CGREF1 -123 bp, ITIH3 -15 bp, PM20D1 -132 bp, UMOD
-##   -1 bp were all matching the wrong variant). The pre-fix estimates were also
-##   implausible on their face (PM20D1 OR 1.6e-9, UMOD OR 5.9e8); the corrected
-##   estimates are of normal magnitude.
-##   Corrected result: 7 estimable, 5 with no genome-wide significant breast
-##   variant in the cis window. Nominal reverse signals at ATRAID (p = 0.0032) and
-##   CGREF1 (p = 0.0476) both derive from the SAME single variant — both genes sit
-##   on chr2p23.3 with the pleiotropic GCKR locus inside their cis windows — so
-##   they are one locus, not two findings. No multi-instrument protein shows a
-##   concordant reverse effect. The manuscript reports this explicitly.
-##   Lesson: never use a positional tolerance to bridge a suspected build
-##   mismatch. Verify the build, then match exactly.
+## Script 46: Bidirectional MR (breast cancer liability -> circulating protein)
+## ─────────────────────────────────────────────────────────────────────────────
+## For each of the 16 breast cancer MR-prioritized proteins, genome-wide
+## significant breast cancer variants within the protein's cis window are used
+## as instruments, with FinnGen R10 Olink pQTL summary statistics as outcome.
+## Both datasets are on GRCh38 (the BCAC file is the GWAS Catalog harmonised
+## release), so variants are matched on exact base-pair position plus allele
+## concordance. No positional tolerance is used: a tolerance window can match a
+## neighbouring variant that shares the same allele pair. Proteins whose breast
+## cancer instruments are absent from the pQTL file at the exact position are
+## reported as not estimable (note = "no_exact_pos_match").
+## Output: results/bidirectional/bidirectional_v2_{results,qc}.csv
 
 suppressPackageStartupMessages({
   library(data.table); library(TwoSampleMR)
@@ -48,8 +25,9 @@ WINDOW_KB   <- 500L
 F_THRESH    <- 10
 POS_TOL_BP  <- 0L        # both sides are GRCh38 - exact position matching
 
-priority_proteins <- c("SNX15","EFNA1","UMOD","IL34","PM20D1","CGREF1","ATRAID",
-                        "ITIH3","TNFRSF6B","SWAP70","INHBB","APOE")
+priority_proteins <- c("SNX15","EFNA1","FGF5","UMOD","SWAP70","ATRAID","TNFRSF6B",
+                        "ITIH3","KLB","PM20D1","TSPAN8","FGFR4","IL34","APOE",
+                        "CGREF1","INHBB")
 
 probe_map <- fread(file.path(proj, "data/pqtl/finngen_olink_probe_map.tsv"))
 probe_map[, chr_int := suppressWarnings(as.integer(chr2))]
@@ -151,7 +129,7 @@ for (i in seq_len(nrow(probe_map))) {
   }
   message(sprintf("  pQTL variants in region: %d", nrow(pqtl)))
 
-  # Position + allele matching (both GRCh38; POS_TOL_BP = 0 -> exact)
+  # Exact position + allele matching (both GRCh38)
   matched <- list()
   for (j in seq_len(nrow(inst))) {
     pos_j  <- inst$pos38[j]
@@ -168,25 +146,8 @@ for (i in seq_len(nrow(probe_map))) {
   }
 
   if (!length(matched)) {
-    # Retained as a diagnostic only: with both sides on GRCh38 an exact-position
-    # miss means the variant is genuinely absent from the pQTL file, not shifted.
-    message("  No exact-position matches; retrying with ±1000bp as diagnostic...")
-    for (j in seq_len(nrow(inst))) {
-      pos_j  <- inst$pos38[j]
-      ap_j   <- inst$allele_pair[j]
-      ap_j_rc<- inst$allele_pair_rc[j]
-      hits   <- pqtl[abs(pos38 - pos_j) <= 1000L &
-                       (allele_pair == ap_j | allele_pair == ap_j_rc)]
-      if (!nrow(hits)) next
-      hits <- hits[1]
-      if (hits$allele_pair == ap_j_rc) hits[, beta_out := -beta_out]
-      matched[[length(matched)+1]] <- cbind(inst[j], hits)
-    }
-  }
-
-  if (!length(matched)) {
     qc_list[[prot]] <- data.table(protein=prot,n_inst=nrow(inst),n_matched=0,
-                                   n_harm=0,mr_success=FALSE,note="no_pos_allele_match")
+                                   n_harm=0,mr_success=FALSE,note="no_exact_pos_match")
     next
   }
   mg <- rbindlist(matched, fill=TRUE)
